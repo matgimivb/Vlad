@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXPasswordField?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
+
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="rs.edu.mg.ivb.LoginController">
+   <children>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0">
+         <children>
+            <ImageView fitHeight="401.0" fitWidth="322.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@img/vlad.jpg" />
+               </image>
+            </ImageView>
+            <Label layoutX="43.0" layoutY="291.0" text="Welcome to" textFill="WHITE">
+               <font>
+                  <Font name="Comic Sans MS" size="25.0" />
+               </font>
+            </Label>
+            <Label layoutX="190.0" layoutY="277.0" text="Vlad" textFill="#7868e6">
+               <font>
+                  <Font name="Comic Sans MS Bold" size="40.0" />
+               </font>
+            </Label>
+            <Label layoutX="91.0" layoutY="319.0" text="scoial network" textFill="WHITE">
+               <font>
+                  <Font name="Comic Sans MS" size="20.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <AnchorPane prefHeight="400.0" prefWidth="283.0" style="-fx-background-color: white;">
+         <children>
+            <JFXTextField fx:id="UsernameEmailTextField" layoutX="60.0" layoutY="231.0" prefHeight="25.0" prefWidth="159.0" promptText="Username/Email" />
+            <JFXPasswordField fx:id="PasswordTextField" layoutX="60.0" layoutY="279.0" prefHeight="25.0" prefWidth="159.0" promptText="Password" />
+            <JFXButton layoutX="97.0" layoutY="332.0" onAction="#OnLoginBtnClick" prefHeight="25.0" prefWidth="84.0" style="-fx-background-color: '7868e6';" text="Log In" textFill="WHITE" />
+            <Label layoutX="219.0" layoutY="14.0" text="Register" textFill="#7868e6">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="150.0" fitWidth="150.0" layoutX="65.0" layoutY="55.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@img/avatar.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="160.0" fitWidth="165.0" layoutX="64.0" layoutY="44.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@img/output-onlinepngtools.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+   </children>
+</HBox>
