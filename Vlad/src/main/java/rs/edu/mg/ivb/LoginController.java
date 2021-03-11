@@ -3,10 +3,14 @@ package rs.edu.mg.ivb;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import java.net.URL;
+import java.sql.SQLException;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import rs.edu.mg.ivb.db.dao.User;
+import rs.edu.mg.ivb.db.repository.UserRepository;
 
 public class LoginController implements Initializable {
 
@@ -21,11 +25,16 @@ public class LoginController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }    
+    }
 
     @FXML
-    private void OnLoginBtnClick(ActionEvent event) {
-        
+    private void OnLoginBtnClick(ActionEvent event) throws SQLException {
+        UserRepository test = new UserRepository();
+        List<User> users = test.getUsers();
+
+        for (User user : users) {
+            user.print();
+        }
     }
-    
+
 }
