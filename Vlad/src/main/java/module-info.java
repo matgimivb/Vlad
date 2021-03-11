@@ -6,4 +6,5 @@ module rs.edu.mg.ivb {
     exports rs.edu.mg.ivb;
     requires com.jfoenix;
     requires java.base;
+    requires java.sql;
 }
