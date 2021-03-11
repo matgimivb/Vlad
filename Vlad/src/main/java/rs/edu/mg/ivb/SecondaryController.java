@@ -1,4 +1,4 @@
-package rs.edu.mg.ivb.controllers;
+package rs.edu.mg.ivb;
 
 import java.io.IOException;
 import javafx.fxml.FXML;

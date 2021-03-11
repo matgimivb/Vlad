@@ -5,14 +5,12 @@ import java.util.*;
 import rs.edu.mg.ivb.db.DBConnection;
 import rs.edu.mg.ivb.db.dao.*;
 
-
 public class UserRepository {
+
     public List<User> getUsers() throws SQLException {
         List<User> result = new LinkedList<>();
 
-        try (Connection conn = DBConnection.getConnection();
-                Statement statement = conn.createStatement();
-                ResultSet rs = statement.executeQuery("SELECT * FROM User");) {
+        try ( Connection conn = DBConnection.getConnection();  Statement statement = conn.createStatement();  ResultSet rs = statement.executeQuery("SELECT * FROM User");) {
             while (rs.next()) {
                 User u = new User();
                 u.ID = rs.getInt("ID");
@@ -33,8 +31,7 @@ public class UserRepository {
         User result = u;
         if (u.ID == null) {
             // insert user
-            try (Connection conn = DBConnection.getConnection();
-                    PreparedStatement statement = conn.prepareStatement("INSERT INTO User VALUES (NULL, ?, ?, ?, ?, ?, NULL)");) {
+            try ( Connection conn = DBConnection.getConnection();  PreparedStatement statement = conn.prepareStatement("INSERT INTO User VALUES (NULL, ?, ?, ?, ?, ?, NULL)");) {
                 statement.setString(1, u.Username);
                 statement.setString(2, u.Password);
                 statement.setString(3, u.FirstName);
@@ -50,8 +47,7 @@ public class UserRepository {
         } else {
             // update user
 
-            try (Connection conn = DBConnection.getConnection();
-                    PreparedStatement statement = conn.prepareStatement("UPDATE User SET Username=?, Password=?, FirstName=?, LastName=?, Email=? WHERE Id=?");) {
+            try ( Connection conn = DBConnection.getConnection();  PreparedStatement statement = conn.prepareStatement("UPDATE User SET Username=?, Password=?, FirstName=?, LastName=?, Email=? WHERE Id=?");) {
                 statement.setString(1, u.Username);
                 statement.setString(2, u.Password);
                 statement.setString(3, u.FirstName);
@@ -67,15 +63,36 @@ public class UserRepository {
         return result;
     }
 
+    public User getUserByLoginParam(String UsernameOrEmail, String Password) throws SQLException {
+        User result = null;
+        try ( Connection conn = DBConnection.getConnection();  PreparedStatement statement = conn.prepareStatement("SELECT * FROM User WHERE (UserName=? OR Email=?) AND Password=?");) {
+            statement.setString(1, UsernameOrEmail);
+            statement.setString(2, UsernameOrEmail);
+            statement.setString(3, Password);
+
+            try ( ResultSet rs = statement.executeQuery()) {
+                if (rs.next()) {
+                    result = new User();
+                    result.ID = rs.getInt("ID");
+                    result.Username = rs.getString("Username");
+                    result.FirstName = rs.getString("FirstName");
+                    result.LastName = rs.getString("LastName");
+                    result.Email = rs.getString("Email");
+                    result.Password = rs.getString("Password");
+                }
+            }
+        }
+        return result;
+    }
+
     public List<User> getUsersByFirstName(String FirstName) throws SQLException {
 
         List<User> result = new LinkedList<>();
 
-        try (Connection conn = DBConnection.getConnection();
-                PreparedStatement statement = conn.prepareStatement("SELECT * FROM User WHERE FirstName=?");) {
+        try ( Connection conn = DBConnection.getConnection();  PreparedStatement statement = conn.prepareStatement("SELECT * FROM User WHERE FirstName=?");) {
             statement.setString(1, FirstName);
 
-            try (ResultSet rs = statement.executeQuery()) {
+            try ( ResultSet rs = statement.executeQuery()) {
 
                 while (rs.next()) {
                     User u = new User();
@@ -127,18 +144,15 @@ public class UserRepository {
             list.add(user.Email);
         }
 
-   
-
-        try (Connection conn = DBConnection.getConnection();
-                PreparedStatement statement = conn.prepareStatement(sql);) {
+        try ( Connection conn = DBConnection.getConnection();  PreparedStatement statement = conn.prepareStatement(sql);) {
 
             System.out.println(sql);
-            
+
             int parametarIndex = 1;
-            for(Object o:list){
+            for (Object o : list) {
                 statement.setObject(parametarIndex++, o);
             }
-            
+
             ResultSet rs = statement.executeQuery();
 
             while (rs.next()) {
