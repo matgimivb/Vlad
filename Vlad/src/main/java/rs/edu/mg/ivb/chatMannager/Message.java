@@ -16,9 +16,10 @@ public class Message {
     
     public String messtime;
     
-    public char messstatus;
+    //public char messstatus;
     
-    public Message(Integer IdMess,Integer IdChat,Integer IdSender,String messtext,String messtime,char messstatus){
+    public String messstatus;
+    public Message(Integer IdMess,Integer IdChat,Integer IdSender,String messtext,String messtime,/*char messstatus*/String messstatus){
         this.IdMess=IdMess;
         this.IdChat=IdChat;
         this.IdSender=IdSender;

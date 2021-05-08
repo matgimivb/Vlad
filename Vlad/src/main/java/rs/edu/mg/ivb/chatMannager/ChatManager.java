@@ -16,13 +16,14 @@ import rs.edu.mg.ivb.db.dao.User;
 
 public class ChatManager extends TimerTask{
     
+     
     User user;
     
     public ChatManager(User u){
-        this.user=user;
+        this.user=user; 
     }
     
-    
+    //(allch,newmess,menjanje onog glupog dela za or)->odradjeno  iiii jos dodavanje da se uzme prethodnih 20 poruka, grupe 
     
     public void sendMessage(Chat chat,String text){
     long millis=System.currentTimeMillis();
@@ -74,23 +75,27 @@ public class ChatManager extends TimerTask{
         
     }
     
+    
     //KAKO NAPRAVITI CHAT ZA GRUPU
 
+    
+    //ISPRAVLJENA VERZIJA 8.5.2021.  22:33
     //vraca svaki chat u koji je ova osoba ukljucena
     public List<Chat> allChats(){
         List<Chat> l1=new LinkedList<>();
-        String upit="SELECT C.IdChat"
+        String upit="SELECT C.IdChat AS CH,C.IdFrom AS FR,C.IdTo AS TO"
                 + "FROM Chat C"
-                + "WHERE C.IdFrom=? OR C.IdTo=U.ID";
+                + "WHERE C.IdFrom=? OR C.IdTo=?";
         try(Connection conn=DBConnection.getConnection();PreparedStatement ps=conn.prepareStatement(upit)){
             ps.setInt(1,this.user.ID);
+            ps.setInt(2,this.user.ID);
             ps.execute();
             
             ResultSet rs=ps.getResultSet();
             while(rs.next()){
-                Integer IdChat=rs.getInt(1);
-                Integer IdFrom=rs.getInt(2);
-                Integer IdTo=rs.getInt(3);
+                Integer IdChat=rs.getInt("CH");
+                Integer IdFrom=rs.getInt("FR");
+                Integer IdTo=rs.getInt("TO");
                 Chat ch=new Chat(IdChat,IdFrom,IdTo);
                 l1.add(ch);
             }
@@ -133,7 +138,8 @@ public class ChatManager extends TimerTask{
          return l1;
     }  
     
-    
+  // promenjen status 22:45 8.5.2021.   
+  //promenim status  
 //nalazi nove poruke iz odredjenog ceta i ispisuje ih po vremenu,postavlja te poruke na R za received (vise nisu N)
     public List<Message> newMessagesFromChat(Chat c){
         List<Message> mess=new LinkedList<>();
@@ -144,8 +150,12 @@ public class ChatManager extends TimerTask{
                 + "FROM user K,message M,chat C"
                 + "WHERE C.IdChat=? AND M.IdChat=C.IdChat AND M.IdSender!=? AND M.messstatus!='S'AND M.IdSender=K.ID"
                 + "ORDER BY M.vreme ASC ";
+        
         String upit1="UPDATE message M SET messstatus='R' WHERE IdMess=?";
-         try(Connection conn=DBConnection.getConnection();PreparedStatement ps=conn.prepareStatement(upit);PreparedStatement ps1=conn.prepareStatement(upit1)){
+        
+        String upit2="SELECT M.messstatus as ST FROM message M WHERE IdMess=?";
+        
+         try(Connection conn=DBConnection.getConnection();PreparedStatement ps=conn.prepareStatement(upit);PreparedStatement ps1=conn.prepareStatement(upit1);PreparedStatement ps2=conn.prepareStatement(upit2)){
         ps.setInt(1,c.IdChat);
         ps.setInt(2, this.user.ID);
         ps.execute();
@@ -162,8 +172,14 @@ public class ChatManager extends TimerTask{
         
         ps1.setInt(1, idmess);
         ps1.execute();
+        /**//**//**//**//**//**//**//**//**//**//**//**//**///********************************************************/
+        ps2.setInt(1, idmess);
+        ps2.execute();
         
-        char status=(char)(rs.getObject(6));
+       //ovo ne valjaaaaaaaaaaaaaaaaaa 
+        /*char status=(char)(rs.getObject(6));*/
+        String status=ps2.getResultSet().getString("ST");
+        
         Message mess1;
         mess1=new Message(idmess,c.IdChat,idsender,text,vreme,status);
         i++;
@@ -180,7 +196,7 @@ public class ChatManager extends TimerTask{
         //printallmessagestochat()
         //dealwithgraphics();
         
-        
+          
     }catch(SQLException e){
         e.printStackTrace();
     } 
@@ -195,6 +211,7 @@ public class ChatManager extends TimerTask{
         String upit="SELECT *"
                 + "FROM message M,chat C"
                 + "WHERE M.IdChat=C.IdChat AND (C.IdFrom=? OR C.IdTo=?)AND M.IdSender!=? AND M.messstatus!='S'";
+        
         try(Connection conn=DBConnection.getConnection();PreparedStatement ps=conn.prepareStatement(upit)){
         ps.setInt(1,this.user.ID);
         ps.setInt(2, this.user.ID);
@@ -206,6 +223,7 @@ public class ChatManager extends TimerTask{
     } 
         return m;
     }
+        
     //vraca brojeve poruka po chatovima//users 
     //VRACA STRINK KOJI JE KONKATENACIJA IDJA OSOBE OD KOJE IMAMO NEPROCITANE PORUKE,NJENOG USERNAME-A I BRPJ NEPROCITANIH PORUKA
     //VRACAM OVAKO JER NEMAM IDEJU STA DRUGO DA URADIM 
@@ -239,14 +257,14 @@ public class ChatManager extends TimerTask{
         return l1;
     }
    
-    
+    //izmenjeno 8.5.2021. 22:40
     //samo seenuje sve poruke u chatu
     public void seenMessage(Chat c){
         //koja je poenta gledati da li je poruka vidjena/kada je poslata ,jer kada udje u chat svakako treba svaka da 
         //bude stavljena na s, a svakako ce svaku da proveri... da li se uopste gubi rveme ako se to proverava???
-            String upit="UPDATE message M,chat C "
-                    + "SET messstatus='S'"
-                    + " WHERE M.IdChat=? AND M.IdSender!=? AND (C.IdTo=? OR C.IdFrom=?) AND messstatus!='S'";
+            String upit="UPDATE message M"/*+",chat C "*/
+                    + "SET M.messstatus='S'"
+                    + " WHERE M.IdChat=? AND M.IdSender!=?"/*+" AND (C.IdTo=? OR C.IdFrom=?)"*/+" AND M.messstatus!='S'";
          try(Connection conn=DBConnection.getConnection();PreparedStatement ps=conn.prepareStatement(upit)){
         ps.setInt(1,c.IdChat);
         ps.setInt(2, this.user.ID);
@@ -257,6 +275,9 @@ public class ChatManager extends TimerTask{
         e.printStackTrace();
     } 
     }
+    
+    
+    
     public void manageTime(User u){
         long millis=System.currentTimeMillis();
         Date date=new Date(millis);
@@ -264,10 +285,6 @@ public class ChatManager extends TimerTask{
       TimerTask task = new ChatManager(u); // creating timer task
       timer.scheduleAtFixedRate(task,date,5000);
       // scheduling the task at the specified time at fixed-rate
-        
-        
-        
-        
         
     }
 
