@@ -14,6 +14,7 @@ import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
 import rs.edu.mg.ivb.db.dao.User;
 import rs.edu.mg.ivb.db.repository.UserRepository;
+import rs.edu.mg.ivb.db.repository.objavarep;
 import rs.edu.mg.ivb.util.SHA512;
 
 public class LoginController implements Initializable {
@@ -24,6 +25,7 @@ public class LoginController implements Initializable {
     private JFXPasswordField PasswordTextField;
     @FXML
     private Label NotValidLoginLabel;
+    private User user;
 
     /**
      * Initializes the controller class.
@@ -49,14 +51,19 @@ public class LoginController implements Initializable {
 
         String hashPasword = SHA512.encryptString(PasswordTextField.getText());
         System.out.println(hashPasword);
-        User user = userRepository.getUserByLoginParam(UsernameEmailTextField.getText(), hashPasword);
+        user = userRepository.getUserByLoginParam(UsernameEmailTextField.getText(), hashPasword);
+        App.u=userRepository.getUserByLoginParam(UsernameEmailTextField.getText(), hashPasword);
 
-        if (user != null) {
+        if (user != null) {            
+            
             App.setRoot("secondary");
+            
         } else {
             PasswordTextField.setText("");
             NotValidLoginLabel.setVisible(true);
         }
     }
+
+    
 
 }

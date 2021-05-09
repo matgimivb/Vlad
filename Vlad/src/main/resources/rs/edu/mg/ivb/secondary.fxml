@@ -1,16 +1,83 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Button?>
-<?import javafx.geometry.Insets?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" spacing="20.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="rs.edu.mg.ivb.SecondaryController">
-    <children>
-        <Label text="Secondary View" />
-        <Button fx:id="secondaryButton" text="Switch to Primary View" onAction="#switchToPrimary" />
-    </children>
-    <padding>
-        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-    </padding>
-</VBox>
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="833.0" prefWidth="1124.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="rs.edu.mg.ivb.SecondaryController">
+   <children>
+      <Rectangle arcHeight="15.0" arcWidth="15.0" height="216.0" layoutX="264.0" layoutY="91.0" strokeType="INSIDE" width="641.0">
+         <effect>
+            <DropShadow offsetX="5.0" offsetY="5.0" />
+         </effect>
+         <fill>
+            <LinearGradient endX="1.0" endY="1.0">
+               <stops>
+                  <Stop>
+                     <color>
+                        <Color red="0.6026843786239624" green="0.0448952242732048" blue="0.8815789222717285" opacity="0.3100000023841858" />
+                     </color>
+                  </Stop>
+                  <Stop offset="1.0">
+                     <color>
+                        <Color red="1.0" green="1.0" blue="1.0" />
+                     </color>
+                  </Stop>
+               </stops>
+            </LinearGradient>
+         </fill>
+      </Rectangle>
+      <ImageView fitHeight="71.0" fitWidth="93.0" layoutX="85.0" layoutY="99.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../../../../../../../../Downloads/wolf.jpg" />
+         </image>
+      </ImageView>
+      <TextArea fx:id="text" layoutX="348.0" layoutY="114.0" prefHeight="63.0" prefWidth="368.0" promptText="What are you thinking about?" style="-fx-background-color: PURPLE;" wrapText="true">
+         <font>
+            <Font name="Cambria Italic" size="18.0" />
+         </font>
+      </TextArea>
+      <JFXButton buttonType="RAISED" layoutX="676.0" layoutY="222.0" prefHeight="56.0" prefWidth="190.0" style="-fx-background-color: lavender; -fx-background-radius: 10;" text="Upload image" textFill="#8c3add">
+         <font>
+            <Font name="Cambria Bold Italic" size="23.0" />
+         </font>
+      </JFXButton>
+      <JFXButton buttonType="RAISED" layoutX="366.0" layoutY="229.0" onAction="#uploadAudio" prefHeight="56.0" prefWidth="190.0" style="-fx-background-color: lavender; -fx-background-radius: 10;" text="Upload audio" textFill="#8c3add">
+         <font>
+            <Font name="Cambria Bold Italic" size="23.0" />
+         </font>
+      </JFXButton>
+      <JFXButton fx:id="postBtn" buttonType="RAISED" layoutX="757.0" layoutY="122.0" onAction="#newPost" prefHeight="48.0" prefWidth="118.0" style="-fx-background-color: lavender; -fx-background-radius: 10;" text="Post!" textFill="#8c3add">
+         <font>
+            <Font name="Cambria Bold Italic" size="23.0" />
+         </font>
+      </JFXButton>
+      <Line endX="688.0" endY="201.5" layoutX="201.0" layoutY="-3.0" startX="100.0" startY="201.5" />
+      <ScrollPane fx:id="scroll" layoutX="236.0" layoutY="347.0" prefHeight="154.0" prefWidth="700.0">
+         <content>
+          <AnchorPane fx:id="randompane" minHeight="0.0" minWidth="0.0" prefHeight="138.0" prefWidth="100.0" />
+         </content>
+      </ScrollPane>
+      <JFXButton fx:id="sendbtn" buttonType="RAISED" layoutX="641.0" layoutY="24.0" onAction="#send" prefHeight="29.0" prefWidth="142.0" style="-fx-background-color: lavender; -fx-background-radius: 10;" text="Send friend request" textFill="#8c3add">
+         <font>
+            <Font name="Cambria Bold Italic" size="12.0" />
+         </font>
+      </JFXButton>
+      <JFXButton fx:id="story" buttonType="RAISED" layoutX="26.0" layoutY="186.0" onAction="#liststory" prefHeight="56.0" prefWidth="190.0" style="-fx-background-color: lavender; -fx-background-radius: 10;" text="story" textFill="#8c3add">
+         <font>
+            <Font name="Cambria Bold Italic" size="23.0" />
+         </font>
+      </JFXButton>
+   </children>
+</Pane>

@@ -127,8 +127,8 @@ public class ChatManager extends TimerTask{
                 String FirstName=rs.getString(4);
                 String LastName=rs.getString(5);
                 String Email=rs.getString(6);
-                User u1=new User(ID,Username,Password,FirstName,LastName,Email);
-                l1.add(u1);
+                //User u1=new User(ID,Username,Password,FirstName,LastName,Email);
+                //l1.add(u1);
             }
             
         }catch(SQLException e){

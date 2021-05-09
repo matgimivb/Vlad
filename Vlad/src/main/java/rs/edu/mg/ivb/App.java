@@ -7,6 +7,10 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
+import rs.edu.mg.ivb.db.dao.User;
+import rs.edu.mg.ivb.db.repository.objavarep;
 
 /**
  * JavaFX App
@@ -14,6 +18,9 @@ import java.io.IOException;
 public class App extends Application {
 
     private static Scene scene;
+    public static  User u;
+    public static String k;
+   
 
     @Override
     public void start(Stage stage) throws IOException {
