@@ -58,30 +58,13 @@ public class accept {
     
     @FXML
     private AnchorPane itisinajjaci;
-    
- 
+        @FXML
+    private Pane marijanabakterijarevic;
     
     @FXML
-    void getstring(ActionEvent event) {
-
-    }
-   /*static Pane rofl(String username)
-    {Pane s=new Pane();
-    s.prefWidth(820);
-    s.prefHeight(130);
-    Label l=l1; l.setLayoutX(200);l.setLayoutY(45); l.prefWidth(120); l.prefHeight(45);
-    Label m=l2; l.setLayoutX(340);l.setLayoutY(45); l.prefWidth(212); l.prefHeight(45);
-   l.setText(username);
-   JFXButton b2=no;b2.setLayoutX(200);b2.setLayoutY(45);
-   JFXButton b1=yes;b1.setLayoutX(200);b1.setLayoutY(45); 
-  s.getChildren().addAll(l,m,b2,b1);
-   
-    return s;
-    }*/
-
-    @FXML
-     void  lol( ActionEvent event) throws SQLException
+    void initialize() throws SQLException
     {
+        {
         
         List<String> odkoga=new LinkedList<>();
          List<String> zakoga=new LinkedList<>();
@@ -91,14 +74,16 @@ public class accept {
         ps1.setString(1, us.Username);
         ResultSet rs1=ps1.executeQuery();
         int i=0;
-        
+        marijanabakterijarevic.getChildren().clear();
 
         while(rs1.next())
         { 
             String str1=rs1.getString("odkoga");
             String str2=rs1.getString("zakoga");
-            itisinajjaci.prefHeight(290+100*i);
-            
+            itisinajjaci.setMinHeight(290+100*i);
+            itisinajjaci.setMaxHeight(290+100*i);
+            marijanabakterijarevic.setMinHeight(130+100*i);
+            marijanabakterijarevic.setMaxHeight(130+100*i);
            
             
                     
@@ -107,10 +92,10 @@ public class accept {
             zakoga.add(rs1.getString("zakoga"));
             status.add(rs1.getString("tre"));*/
       
-            opa.setOpacity(0);
+
             JFXButton yes = new JFXButton("Yes");
             yes.setLayoutX(580);
-            yes.setLayoutY(190+100*i);
+            yes.setLayoutY(30+100*i);
             yes.setPrefWidth(80);
             yes.setPrefHeight(50);
             yes.setStyle("-fx-font-size: 24px; -fx-font-weight:Britanic Bold; -fx-background-color: black; -fx-text-fill: #b52020");
@@ -126,7 +111,7 @@ public class accept {
        
             JFXButton no = new JFXButton("No");
             no.setLayoutX(690);
-            no.setLayoutY(190+100*i);
+            no.setLayoutY(30+100*i);
             no.setPrefWidth(80);
             no.setPrefHeight(50);
             no.setStyle("-fx-font-size:  24px;-fx-font-weight:Britanic Bold; -fx-background-color: black; -fx-text-fill: #b52020");
@@ -146,25 +131,27 @@ public class accept {
             L.setText(rs1.getString("odkoga")+" wants to become friends.");
             L.setStyle("-fx-font-size:  18px;-fx-font-weight:Britanic Bold; -fx-background-color: white; -fx-text-fill: #b52020");
             L.setLayoutX(230);
-            L.setLayoutY(190+100*i);
+            L.setLayoutY(30+100*i);
             L.setPrefWidth(320);
             L.setPrefHeight(50);
-            itisinajjaci.getChildren().addAll(yes,no,L);
-               no.setOnMousePressed((javafx.scene.input.MouseEvent me) ->{
-                try {
-                    PreparedStatement ps5=conn.prepareStatement("DELETE FROM prijateljstvo WHERE odkoga=? AND zakoga=?");
+            marijanabakterijarevic.getChildren().addAll(yes,no,L);
+            
+              no.setOnMousePressed((javafx.scene.input.MouseEvent me) ->{
+                  
+                  try ( Connection conn1= DBConnection.getConnection();    ) 
+                   
+                  {    PreparedStatement ps5=conn1.prepareStatement("DELETE FROM prijateljstvo WHERE odkoga=? AND zakoga=?");
                     ps5.setString(1,str1);
                     ps5.setString(2,str2);
                     ps5.execute();
-                    
-                } catch (SQLException ex) {
+
+            
+                  } catch (SQLException ex) {
                     Logger.getLogger(accept.class.getName()).log(Level.SEVERE, null, ex);
                 }
-           itisinajjaci.getChildren().removeAll(yes,no,L);
-            
-            }
-            );
-                             yes.setOnMousePressed((javafx.scene.input.MouseEvent me) ->{
+              marijanabakterijarevic.getChildren().removeAll(yes,no,L);});
+
+              yes.setOnMousePressed((javafx.scene.input.MouseEvent me) ->{
                   
                   try ( Connection conn1= DBConnection.getConnection();    ) 
                    
@@ -173,16 +160,10 @@ public class accept {
                     ps4.setString(2,str2);
                     ps4.execute();
                     
-                   
-                    
-   
-                  
-           
-            
                   } catch (SQLException ex) {
                     Logger.getLogger(accept.class.getName()).log(Level.SEVERE, null, ex);
                 }
-           itisinajjaci.getChildren().removeAll(yes,no,L);
+           marijanabakterijarevic.getChildren().removeAll(yes,no,L);
             
             }
             );
@@ -190,19 +171,123 @@ public class accept {
             
             
             }}}
-        
-
-        
-    
-    
-    
+    }
  
-        
-           
-
-        
     
+    @FXML
+    void getstring(ActionEvent event) {
+    }
+    @FXML
+     void  lol( ActionEvent event) throws SQLException
+    {
+        {
+        
+        List<String> odkoga=new LinkedList<>();
+         List<String> zakoga=new LinkedList<>();
+          List<String> status=new LinkedList<>();
+        try ( Connection conn = DBConnection.getConnection();  Statement statement = conn.createStatement();  ) 
+        {PreparedStatement ps1=conn.prepareStatement("SELECT zakoga,odkoga,tre FROM prijateljstvo WHERE zakoga=? AND tre='M'");
+        ps1.setString(1, us.Username);
+        ResultSet rs1=ps1.executeQuery();
+        int i=0;
+        marijanabakterijarevic.getChildren().clear();
 
+        while(rs1.next())
+        { 
+            String str1=rs1.getString("odkoga");
+            String str2=rs1.getString("zakoga");
+            itisinajjaci.setMinHeight(290+100*i);
+            itisinajjaci.setMaxHeight(290+100*i);
+            marijanabakterijarevic.setMinHeight(130+100*i);
+            marijanabakterijarevic.setMaxHeight(130+100*i);
+           
+            
+                    
+             
+            /*odkoga.add(rs1.getString("odkoga"));
+            zakoga.add(rs1.getString("zakoga"));
+            status.add(rs1.getString("tre"));*/
+      
+
+            JFXButton yes = new JFXButton("Yes");
+            yes.setLayoutX(580);
+            yes.setLayoutY(30+100*i);
+            yes.setPrefWidth(80);
+            yes.setPrefHeight(50);
+            yes.setStyle("-fx-font-size: 24px; -fx-font-weight:Britanic Bold; -fx-background-color: black; -fx-text-fill: #b52020");
+            yes.setOnMouseEntered( (javafx.scene.input.MouseEvent me) -> {
+                    yes.setStyle("-fx-font-size:  24px; -fx-font-weight:Britanic Bold; -fx-font-weight:  black;  -fx-text-fill: #b52020");
+
+            });
+            yes.setOnMouseExited( (javafx.scene.input.MouseEvent me) -> {
+                    yes.setStyle("-fx-font-size:  24px; -fx-font-weight:Britanic Bold; -fx-background-color: black; -fx-text-fill: #b52020");
+
+            });
+
+       
+            JFXButton no = new JFXButton("No");
+            no.setLayoutX(690);
+            no.setLayoutY(30+100*i);
+            no.setPrefWidth(80);
+            no.setPrefHeight(50);
+            no.setStyle("-fx-font-size:  24px;-fx-font-weight:Britanic Bold; -fx-background-color: black; -fx-text-fill: #b52020");
+            no.setOnMouseEntered( (javafx.scene.input.MouseEvent me) -> {
+                    no.setStyle("-fx-font-size:  24px;-fx-font-weight:Britanic Bold; -fx-font-weight:  black;  -fx-text-fill: #b52020");
+
+            });
+            no.setOnMouseExited( (javafx.scene.input.MouseEvent me) -> {
+                    no.setStyle("-fx-font-size:  24px;-fx-font-weight:Britanic Bold; -fx-background-color: black; -fx-text-fill: #b52020");
+
+            });
+            
+         
+        
+         
+            Label L=new Label();
+            L.setText(rs1.getString("odkoga")+" wants to become friends.");
+            L.setStyle("-fx-font-size:  18px;-fx-font-weight:Britanic Bold; -fx-background-color: white; -fx-text-fill: #b52020");
+            L.setLayoutX(230);
+            L.setLayoutY(30+100*i);
+            L.setPrefWidth(320);
+            L.setPrefHeight(50);
+            marijanabakterijarevic.getChildren().addAll(yes,no,L);
+            
+              no.setOnMousePressed((javafx.scene.input.MouseEvent me) ->{
+                  
+                  try ( Connection conn1= DBConnection.getConnection();    ) 
+                   
+                  {    PreparedStatement ps5=conn1.prepareStatement("DELETE FROM prijateljstvo WHERE odkoga=? AND zakoga=?");
+                    ps5.setString(1,str1);
+                    ps5.setString(2,str2);
+                    ps5.execute();
+
+            
+                  } catch (SQLException ex) {
+                    Logger.getLogger(accept.class.getName()).log(Level.SEVERE, null, ex);
+                }
+              marijanabakterijarevic.getChildren().removeAll(yes,no,L);});
+
+              yes.setOnMousePressed((javafx.scene.input.MouseEvent me) ->{
+                  
+                  try ( Connection conn1= DBConnection.getConnection();    ) 
+                   
+                  {   PreparedStatement ps4=conn1.prepareStatement("UPDATE prijateljstvo SET  tre='Y' WHERE odkoga=? AND zakoga=?");
+                    ps4.setString(1,str1);
+                    ps4.setString(2,str2);
+                    ps4.execute();
+                    
+                  } catch (SQLException ex) {
+                    Logger.getLogger(accept.class.getName()).log(Level.SEVERE, null, ex);
+                }
+           marijanabakterijarevic.getChildren().removeAll(yes,no,L);
+            
+            }
+            );
+            i++;
+            
+            
+            }}}
+    }
 
     @FXML
     void sendreq(ActionEvent event) throws SQLException {
