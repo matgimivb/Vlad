@@ -50,7 +50,7 @@ public class LoginController implements Initializable {
         UserRepository userRepository = new UserRepository();
 
         String hashPasword = SHA512.encryptString(PasswordTextField.getText());
-        System.out.println(hashPasword);
+
         user = userRepository.getUserByLoginParam(UsernameEmailTextField.getText(), hashPasword);
         App.u=userRepository.getUserByLoginParam(UsernameEmailTextField.getText(), hashPasword);
 

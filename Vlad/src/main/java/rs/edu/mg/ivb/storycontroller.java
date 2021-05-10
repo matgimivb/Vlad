@@ -21,7 +21,7 @@ import javafx.stage.Modality;
 import rs.edu.mg.ivb.db.DBConnection;
 import rs.edu.mg.ivb.db.dao.User;
 
-public class storycontroller {
+public class storycontroller  extends SecondaryController {
 
     @FXML
     private ScrollPane adagaja;
@@ -55,6 +55,95 @@ public class storycontroller {
     private Pane neadagajic;
    
     static User us= App.u;
+    static String s;
+
+    
+            @FXML
+    public void initialize() throws SQLException
+    {int ex=0;
+        int kon=Integer.parseInt(App.k);
+       // System.out.println(kon);
+        try ( Connection conn = DBConnection.getConnection();  Statement s = conn.createStatement();  ) 
+        {PreparedStatement ps1=conn.prepareStatement("SELECT status From objava  WHERE Idobj=?");
+        ps1.setInt(1,kon);//nzm kako da prosledim objavu
+        ResultSet rs1 = ps1.executeQuery(); 
+        rs1.next();
+        statusxd.setText(rs1.getString("status"));
+        PreparedStatement ps2=conn.prepareStatement("SELECT COUNT(*) From LIKES  WHERE Idobj=? AND tre='L'");
+        ps2.setInt(1, kon);//nzm kako da prosledim objavu
+        ResultSet rs2 = ps2.executeQuery();
+        rs2.next();
+        int i=rs2.getInt(1);
+        
+        numlike.setText(""+i);
+        PreparedStatement ps3=conn.prepareStatement("SELECT COUNT(*) From LIKES  WHERE Idobj=? AND tre='D'");
+        ps3.setInt(1, kon);//nzm kako da prosledim objavu
+        ResultSet rs3 = ps3.executeQuery(); 
+        rs3.next();
+        i=rs3.getInt(1);
+        numdislike.setText(""+i);
+        PreparedStatement PS=conn.prepareStatement("SELECT * From komentari  WHERE Idobj=?");
+        PS.setInt(1,kon);
+        ResultSet RS = PS.executeQuery();
+        neadagajic.getChildren().clear();
+        neadagajic.setMinHeight(165);
+        neadagajic.setMaxHeight(165);
+
+        while(RS.next())
+        {JFXTextArea ta=new JFXTextArea();
+        ta.setPrefHeight(18);
+        ta.setPrefWidth(270);
+        ta.setLayoutX(14);
+        ta.setLayoutY(14+75*ex);
+        ta.setText(RS.getString("comm"));
+        neadagajic.getChildren().add(ta);
+        neadagajic.setMinHeight(165+40*ex);
+        neadagajic.setMaxHeight(165+40*ex);
+
+        adagajic.setMinHeight(826+40*ex);
+        adagajic.setMaxHeight(826+40*ex);
+        Label l=new Label();
+        l.setLayoutX(300);
+        l.setLayoutY(18+75*ex);
+        l.setText(RS.getString("Username"));
+        l.setStyle("-fx-font-size:  14px;-fx-font-weight:Britanic Bold; -fx-background-color: black; -fx-text-fill: #b52020");
+        JFXButton b=new JFXButton();
+        b.setLayoutX(260);
+        b.setLayoutY(1+75*ex);
+        b.setText("DELETE");
+        b.setStyle("-fx-font-size: 8px; -fx-font-weight:Britanic Bold; -fx-background-color: black; -fx-text-fill: #b52020");
+        neadagajic.getChildren().addAll(b,l);
+        ex++;
+        int rea=RS.getInt("idcom");
+          if((us.Username).equals(RS.getString("Username")))
+        {
+         b.setOnMousePressed((javafx.scene.input.MouseEvent me) ->{
+         
+            try {
+                Connection conn1 = DBConnection.getConnection(); 
+                String edited=ta.getText();
+                PreparedStatement ps5=conn1.prepareStatement("DELETE FROM komentari WHERE idcom=?");
+                ps5.setInt(1,rea );
+                ps5.execute();
+                neadagajic.getChildren().removeAll(ta,b,l);
+            } catch (SQLException ex1) {
+                Logger.getLogger(storycontroller.class.getName()).log(Level.SEVERE, null, ex1);
+            }
+});
+        }
+         else b.setOpacity(0);
+        }
+       
+        
+        
+        }
+       // System.out.println(s);
+        //System.out.println(App.k);
+      //  if(App.k==null) initialize();
+        
+
+    }
+    
     @FXML
     void dislike(ActionEvent event) throws SQLException {
         int kon=Integer.parseInt(App.k);
@@ -74,8 +163,8 @@ public class storycontroller {
             PSX1.setString(2,marence);            
             ResultSet RSX2=PSX1.executeQuery();
             boolean rofl=RSX2.next();
-            System.out.println(marence);
-            System.out.println(us.Username);
+            //System.out.println(marence);
+            //System.out.println(us.Username);
             if(rofl || xd || us.Username.equals(marence)){
             PreparedStatement ps1=conn.prepareStatement("SELECT * FROM likes L WHERE L.Username=? AND L.Idobj=?");
         ps1.setString(1, us.Username);
@@ -136,6 +225,7 @@ public class storycontroller {
 
     }}
 
+
     @FXML
     void like(ActionEvent event) throws SQLException {
         int kon=Integer.parseInt(App.k);
@@ -155,8 +245,8 @@ public class storycontroller {
             PSX1.setString(2,marence);            
             ResultSet RSX2=PSX1.executeQuery();
             boolean rofl=RSX2.next();
-            System.out.println(marence);
-            System.out.println(us.Username);
+           // System.out.println(marence);
+            //System.out.println(us.Username);
             if(rofl || xd || us.Username.equals(marence)){
 
             PreparedStatement ps1=conn.prepareStatement("SELECT * FROM likes L WHERE L.Username=? AND L.Idobj=?");
@@ -164,7 +254,7 @@ public class storycontroller {
         ps1.setInt(2, kon);
         ResultSet rs1 = ps1.executeQuery(); 
         if(rs1.next()){
-            System.out.println("da"+rs1.getString("tre"));
+            //System.out.println("da"+rs1.getString("tre"));
             
             if(rs1.getString("tre").equals("L"))
                 
@@ -221,6 +311,7 @@ public class storycontroller {
 
     @FXML
     void loadsto(ActionEvent event) throws SQLException {
+        //System.out.println(App.k);
         int ex=0;
         int kon=Integer.parseInt(App.k);
         System.out.println(kon);
@@ -322,8 +413,8 @@ public class storycontroller {
             PSX1.setString(2,marence);            
             ResultSet RSX2=PSX1.executeQuery();
             boolean rofl=RSX2.next();
-            System.out.println(marence);
-            System.out.println(us.Username);
+           // System.out.println(marence);
+            //System.out.println(us.Username);
             if(rofl || xd || us.Username.equals(marence)){
             PreparedStatement ps1=conn.prepareStatement("INSERT INTO komentari(Idobj,Username,comm,idcom) Values(?,?,?,? )");
         ResultSet rs=s.executeQuery("Select Max(idcom)+1 From komentari");
@@ -334,7 +425,7 @@ public class storycontroller {
         ps1.setString(2, us.Username);
         ps1.setString(3,str);
         ps1.execute();
-      /*  JFXTextArea ta=new JFXTextArea();
+        JFXTextArea ta=new JFXTextArea();
         ta.setPrefHeight(18);
         ta.setPrefWidth(270);
         ta.setLayoutX(14);
@@ -349,7 +440,7 @@ public class storycontroller {
         c.setLayoutX(260);
         c.setLayoutY(1);
         c.setText("DELETE");
-        c.setStyle("-fx-font-size: 6px; -fx-font-weight:Britanic Bold; -fx-background-color: black; -fx-text-fill: #b52020");*/
+        c.setStyle("-fx-font-size: 6px; -fx-font-weight:Britanic Bold; -fx-background-color: black; -fx-text-fill: #b52020");
         neadagajic.getChildren().clear();
         neadagajic.setPrefHeight(153);
         adagajic.setPrefHeight(583);
@@ -369,7 +460,7 @@ public class storycontroller {
             }
 });*/
         
-        
+     
         int ex=0;
          PreparedStatement PS=conn.prepareStatement("SELECT * From komentari  WHERE Idobj=?");
         PS.setInt(1,kon);
@@ -435,5 +526,6 @@ public class storycontroller {
        alert.showAndWait();}
 
     }
-    }
-}
+    }}
+
+

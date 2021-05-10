@@ -19,6 +19,7 @@ public class App extends Application {
 
     private static Scene scene;
     public static  User u;
+    public static User l;
     public static String k;
    
 

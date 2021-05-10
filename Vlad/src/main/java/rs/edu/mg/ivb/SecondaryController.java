@@ -64,11 +64,16 @@ public class SecondaryController {
     private JFXButton sendbtn;
 
     @FXML
-    private JFXButton story;
-     static User us= App.u;
+    public static JFXButton story;
+     
+    static User us= App.u;
+     
+     
+     
 
     @FXML
-    void liststory(ActionEvent event) throws SQLException {
+    public void initialize() throws SQLException
+    {{
         int i=0;
         Connection conn1= DBConnection.getConnection();  Statement statement = conn1.createStatement();
         List <Objava> obj;
@@ -120,17 +125,92 @@ public class SecondaryController {
              randompane.getChildren().addAll(C,L,M);
              C.setOnMousePressed((javafx.scene.input.MouseEvent me) ->{
                   try { 
+                    //  System.out.println(L.getText());
                  FXMLLoader FxmlLoader = new FXMLLoader(SecondaryController.this.getClass().getResource("story.fxml"));
                     Parent root1;
+                                       App.k=M.getText();
                
                     root1 = (Parent) FxmlLoader.load();
                     Stage stage = new Stage();
                     stage.setScene(new Scene(root1));
-                    stage.show(); 
-                    App.k=M.getText();}
+                    stage.show();
+
+
+                  }
                     catch (IOException ex) {
                     Logger.getLogger(SecondaryController.class.getName()).log(Level.SEVERE, null, ex);
         }});
+                     }}}
+    @FXML
+    void liststory(ActionEvent event) throws SQLException {
+        int i=0;
+        Connection conn1= DBConnection.getConnection();  Statement statement = conn1.createStatement();
+        List <Objava> obj;
+      
+        obj = objavarep.getObjava();
+       // randompane.setPrefHeight(100);
+       randompane.getChildren().clear();
+       for(i=0;i<obj.size();i++)
+       {
+           SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd");
+            Date date = new Date(System.currentTimeMillis()-60*60*24*1000);
+            Date d1=obj.get(i).datum;
+            if(date.compareTo(d1)>0) 
+            {PreparedStatement ps=conn1.prepareStatement("DELETE FROM objava WHERE Idobj=?");
+            ps.setInt(1, obj.get(i).Idobj);
+            ps.execute();}
+            else if(date.compareTo(d1)==0)
+            {SimpleDateFormat formatter1= new SimpleDateFormat("HH:mm:ss");
+            Date date1 = new Date(System.currentTimeMillis());
+            Time d11=obj.get(i).vreme;
+            if(d11.compareTo(date1)<0)  
+          {PreparedStatement ps=conn1.prepareStatement("DELETE objava WHERE Idobj=?");
+            ps.setInt(1, obj.get(i).Idobj);}
+            }} 
+       randompane.getChildren().clear();
+
+      for(i=0;i<obj.size();i++)
+        {
+            Circle C=new Circle (40);
+            C.setFill(Color.BLACK);
+            C.setLayoutX(50+100*(obj.size()-i-1));
+            C.setLayoutY(50.0);
+        
+           
+           
+          //  randompane.prefWidth(100*(i+1));
+            randompane.setMinWidth(100*(i+1));
+            randompane.setMaxWidth(100*(i+1));
+            Label L=new Label();
+            L.setText(obj.get(i).username);
+            L.setStyle("-fx-font-size:  18px;-fx-font-weight:Britanic Bold; -fx-background-color: black; -fx-text-fill: #b52020");
+            L.setLayoutX(11+100*(obj.size()-i-1));
+            L.setLayoutY(100);
+            L.setPrefWidth(80);
+            L.setPrefHeight(30);
+            L.setTextAlignment(TextAlignment.CENTER);
+            Label M=new Label();
+            M.setText(obj.get(i).Idobj+"");
+            M.setOpacity(0);
+             randompane.getChildren().addAll(C,L,M);
+             C.setOnMousePressed((javafx.scene.input.MouseEvent me) ->{
+                  try { 
+                    //  System.out.println(L.getText());
+                 FXMLLoader FxmlLoader = new FXMLLoader(SecondaryController.this.getClass().getResource("story.fxml"));
+                    Parent root1;
+                                       App.k=M.getText();
+               
+                    root1 = (Parent) FxmlLoader.load();
+                    Stage stage = new Stage();
+                    stage.setScene(new Scene(root1));
+                    stage.show();
+
+
+                  }
+                    catch (IOException ex) {
+                    Logger.getLogger(SecondaryController.class.getName()).log(Level.SEVERE, null, ex);
+        }});
+                     
                      }}
     
     private final FileChooser fileChooser = new FileChooser();
@@ -217,6 +297,7 @@ public class SecondaryController {
         
            
            
+          //  randompane.prefWidth(100*(i+1));
             randompane.setMinWidth(100*(i+1));
             randompane.setMaxWidth(100*(i+1));
             Label L=new Label();
@@ -233,19 +314,22 @@ public class SecondaryController {
              randompane.getChildren().addAll(C,L,M);
              C.setOnMousePressed((javafx.scene.input.MouseEvent me) ->{
                   try { 
+                    //  System.out.println(L.getText());
                  FXMLLoader FxmlLoader = new FXMLLoader(SecondaryController.this.getClass().getResource("story.fxml"));
                     Parent root1;
-                    System.out.println(M.getText());
+                                       App.k=M.getText();
                
                     root1 = (Parent) FxmlLoader.load();
                     Stage stage = new Stage();
                     stage.setScene(new Scene(root1));
-                    stage.show(); 
-                    App.k=M.getText();
+                    stage.show();
+
+
                   }
                     catch (IOException ex) {
                     Logger.getLogger(SecondaryController.class.getName()).log(Level.SEVERE, null, ex);
         }});
+                     
                      }
             
           
