@@ -143,7 +143,7 @@ public class storycontroller  extends SecondaryController {
         
 
     }
-    
+    //adagaja
     @FXML
     void dislike(ActionEvent event) throws SQLException {
         int kon=Integer.parseInt(App.k);
