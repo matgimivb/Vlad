@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextArea?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
@@ -11,45 +12,51 @@
 
 <ScrollPane fx:id="adagaja" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="591.0" prefWidth="832.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="rs.edu.mg.ivb.storycontroller">
   <content>
-    <AnchorPane fx:id="adagajic" minHeight="0.0" minWidth="0.0" prefHeight="583.0" prefWidth="826.0">
+    <AnchorPane fx:id="adagajic" minHeight="0.0" minWidth="0.0" prefHeight="584.0" prefWidth="826.0">
          <children>
-            <JFXButton fx:id="dislikedugme" layoutX="680.0" layoutY="150.0" onAction="#dislike" prefHeight="55.0" prefWidth="135.0" style="-fx-background-color: BLACK;" text="DISKLIKE" textFill="#b52020" textOverrun="CENTER_WORD_ELLIPSIS">
+            <JFXButton fx:id="dislikedugme" layoutX="304.0" layoutY="398.0" onAction="#dislike" prefHeight="55.0" prefWidth="135.0" style="-fx-background-color: wheat;" text="Dislike" textFill="#b26420ea" textOverrun="CENTER_WORD_ELLIPSIS">
                <font>
-                  <Font name="Britannic Bold" size="24.0" />
+                  <Font name="Cambria Bold Italic" size="25.0" />
                </font>
             </JFXButton>
-            <JFXButton fx:id="likedugme" layoutX="515.0" layoutY="150.0" onAction="#like" prefHeight="55.0" prefWidth="135.0" style="-fx-background-color: BLACK;" text="LIKE" textFill="#b52020" textOverrun="CENTER_WORD_ELLIPSIS">
+            <JFXButton fx:id="likedugme" layoutX="40.0" layoutY="398.0" onAction="#like" prefHeight="55.0" prefWidth="135.0" style="-fx-background-color: lavender;" text="Like" textFill="#230de8" textOverrun="CENTER_WORD_ELLIPSIS">
                <font>
-                  <Font name="Britannic Bold" size="24.0" />
+                  <Font name="Cambria Bold Italic" size="25.0" />
                </font>
             </JFXButton>
             <ImageView fitHeight="127.0" fitWidth="158.0" layoutX="31.0" layoutY="22.0" pickOnBounds="true" preserveRatio="true" />
-            <Label fx:id="statusxd" layoutX="31.0" layoutY="205.0" prefHeight="366.0" prefWidth="402.0" style="-fx-background-color: BLACK;" textFill="#b52020" wrapText="true">
+            <Label fx:id="numlike" layoutX="96.0" layoutY="460.0" prefHeight="45.0" prefWidth="60.0" textAlignment="CENTER" textFill="#8c3add">
                <font>
-                  <Font name="Britannic Bold" size="24.0" />
-               </font></Label>
-            <Label fx:id="numlike" layoutX="575.0" layoutY="95.0" prefHeight="45.0" prefWidth="60.0" textFill="#b52020">
-               <font>
-                  <Font name="Britannic Bold" size="18.0" />
+                  <Font name="System Bold" size="20.0" />
                </font>
             </Label>
-            <Label fx:id="numdislike" layoutX="738.0" layoutY="95.0" prefHeight="45.0" prefWidth="60.0" textFill="#b52020">
+            <Label fx:id="numdislike" layoutX="372.0" layoutY="460.0" prefHeight="45.0" prefWidth="60.0" textAlignment="CENTER" textFill="#8c3add">
                <font>
-                  <Font name="Britannic Bold" size="18.0" />
+                  <Font name="System Bold" size="20.0" />
                </font>
             </Label>
-            <JFXButton fx:id="load" layoutX="270.0" layoutY="90.0" onAction="#loadsto" prefHeight="55.0" prefWidth="164.0" style="-fx-background-color: BLACK;" text="Load Story" textFill="#b52020" textOverrun="CENTER_WORD_ELLIPSIS">
+            <JFXButton fx:id="load" layoutX="555.0" layoutY="149.0" onAction="#loadsto" prefHeight="55.0" prefWidth="212.0" style="-fx-background-color: lavender;" text="Refresh story" textFill="#8c3add" textOverrun="CENTER_WORD_ELLIPSIS">
                <font>
-                  <Font name="Britannic Bold" size="24.0" />
+                  <Font name="Cambria Bold Italic" size="23.0" />
                </font>
             </JFXButton>
-            <JFXTextField fx:id="upm" layoutX="515.0" layoutY="245.0" prefHeight="46.0" prefWidth="292.0" promptText="Enter your comment" />
-            <JFXButton fx:id="postcomm" layoutX="515.0" layoutY="332.0" onAction="#postlol" prefHeight="55.0" prefWidth="135.0" style="-fx-background-color: BLACK;" text="Post" textFill="#b52020" textOverrun="CENTER_WORD_ELLIPSIS">
+            <JFXTextField fx:id="upm" layoutX="515.0" layoutY="245.0" prefHeight="46.0" prefWidth="292.0" promptText="Enter your comment" unFocusColor="#b51919" />
+            <JFXButton fx:id="postcomm" layoutX="515.0" layoutY="315.0" onAction="#postlol" prefHeight="55.0" prefWidth="292.0" style="-fx-background-color: lightgreen;" text="Post!" textFill="#0b5413" textOverrun="CENTER_WORD_ELLIPSIS">
                <font>
-                  <Font name="Britannic Bold" size="24.0" />
+                  <Font name="Cambria Bold Italic" size="24.0" />
                </font>
             </JFXButton>
             <Pane fx:id="neadagajic" layoutX="445.0" layoutY="413.0" prefHeight="153.0" prefWidth="376.0" />
+            <JFXTextArea fx:id="statusxd" editable="false" layoutX="40.0" layoutY="22.0" prefHeight="340.0" prefWidth="399.0" style="-fx-background-color: lavender; -fx-font-size: 25; -fx-font-style: darkblue;" unFocusColor="#4d4d4d00" wrapText="true">
+               <font>
+                  <Font name="Cambria" size="25.0" />
+               </font>
+            </JFXTextArea>
+            <JFXTextField fx:id="time" disable="true" editable="false" layoutX="524.0" layoutY="22.0" prefHeight="34.0" prefWidth="274.0" text=" " unFocusColor="#4d4d4d00">
+               <font>
+                  <Font name="System Italic" size="16.0" />
+               </font>
+            </JFXTextField>
          </children></AnchorPane>
   </content>
 </ScrollPane>

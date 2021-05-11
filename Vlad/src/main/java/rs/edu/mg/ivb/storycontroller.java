@@ -36,7 +36,7 @@ public class storycontroller  extends SecondaryController {
     private JFXButton likedugme;
 
     @FXML
-    private Label statusxd;
+    private JFXTextArea statusxd;
 
     @FXML
     private Label numlike;
@@ -46,6 +46,9 @@ public class storycontroller  extends SecondaryController {
 
     @FXML
     private JFXButton load;
+    
+    @FXML
+    private JFXTextField time;
     
     @FXML
     private JFXButton postcomm;
@@ -64,11 +67,12 @@ public class storycontroller  extends SecondaryController {
         int kon=Integer.parseInt(App.k);
        // System.out.println(kon);
         try ( Connection conn = DBConnection.getConnection();  Statement s = conn.createStatement();  ) 
-        {PreparedStatement ps1=conn.prepareStatement("SELECT status From objava  WHERE Idobj=?");
+        {PreparedStatement ps1=conn.prepareStatement("SELECT status, datum, vreme From objava  WHERE Idobj=?");
         ps1.setInt(1,kon);//nzm kako da prosledim objavu
         ResultSet rs1 = ps1.executeQuery(); 
         rs1.next();
         statusxd.setText(rs1.getString("status"));
+        time.setText("Posted on " + rs1.getString("datum") + ", " + rs1.getString("vreme"));
         PreparedStatement ps2=conn.prepareStatement("SELECT COUNT(*) From LIKES  WHERE Idobj=? AND tre='L'");
         ps2.setInt(1, kon);//nzm kako da prosledim objavu
         ResultSet rs2 = ps2.executeQuery();
@@ -97,11 +101,11 @@ public class storycontroller  extends SecondaryController {
         ta.setLayoutY(14+75*ex);
         ta.setText(RS.getString("comm"));
         neadagajic.getChildren().add(ta);
-        neadagajic.setMinHeight(165+40*ex);
-        neadagajic.setMaxHeight(165+40*ex);
+        neadagajic.setMinHeight(165+75*ex);
+        neadagajic.setMaxHeight(165+75*ex);
 
-        adagajic.setMinHeight(826+40*ex);
-        adagajic.setMaxHeight(826+40*ex);
+        adagajic.setMinHeight(826+75*ex);
+        adagajic.setMaxHeight(826+75*ex);
         Label l=new Label();
         l.setLayoutX(300);
         l.setLayoutY(18+75*ex);
@@ -349,11 +353,11 @@ public class storycontroller  extends SecondaryController {
         ta.setLayoutY(14+75*ex);
         ta.setText(RS.getString("comm"));
         neadagajic.getChildren().add(ta);
-        neadagajic.setMinHeight(165+40*ex);
-        neadagajic.setMaxHeight(165+40*ex);
+        neadagajic.setMinHeight(165+75*ex);
+        neadagajic.setMaxHeight(165+75*ex);
 
-        adagajic.setMinHeight(826+40*ex);
-        adagajic.setMaxHeight(826+40*ex);
+        adagajic.setMinHeight(826+75*ex);
+        adagajic.setMaxHeight(826+75*ex);
         Label l=new Label();
         l.setLayoutX(300);
         l.setLayoutY(18+75*ex);
@@ -477,9 +481,9 @@ public class storycontroller  extends SecondaryController {
         int y;
         y=RS.getInt("idcom");
         neadagajic.getChildren().add(t);
-        neadagajic.setPrefHeight(153+40*ex);
-        adagajic.setMinHeight(826+40*ex);
-        adagajic.setMaxHeight(826+40*ex);
+        neadagajic.setPrefHeight(153+75*ex);
+        adagajic.setMinHeight(826+75*ex);
+        adagajic.setMaxHeight(826+75*ex);
         Label l=new Label();
         l.setLayoutX(300);
         l.setLayoutY(18+75*ex);

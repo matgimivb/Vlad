@@ -76,33 +76,38 @@ public class SecondaryController {
     {{
         int i=0;
         Connection conn1= DBConnection.getConnection();  Statement statement = conn1.createStatement();
-        List <Objava> obj;
+        List <Objava> obj1;
       
-        obj = objavarep.getObjava();
+        obj1 = objavarep.getObjava();
        // randompane.setPrefHeight(100);
-       for(i=0;i<obj.size();i++)
+       for(i=0;i<obj1.size();i++)
        {
-           SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd");
+             SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             Date date = new Date(System.currentTimeMillis()-60*60*24*1000);
-            Date d1=obj.get(i).datum;
-            if(date.compareTo(d1)>0) 
+            Date d1=obj1.get(i).datum;
+            Time d2=obj1.get(i).vreme;
+            if(formatter.format(date).compareTo(d1+" "+d2)>0) 
             {PreparedStatement ps=conn1.prepareStatement("DELETE FROM objava WHERE Idobj=?");
-            ps.setInt(1, obj.get(i).Idobj);
-            ps.execute();}
-            else if(date.compareTo(d1)==0)
-            {SimpleDateFormat formatter1= new SimpleDateFormat("HH:mm:ss");
-            Date date1 = new Date(System.currentTimeMillis());
-            Time d11=obj.get(i).vreme;
-            if(d11.compareTo(date1)<0)  
-          {PreparedStatement ps=conn1.prepareStatement("DELETE objava WHERE Idobj=?");
-            ps.setInt(1, obj.get(i).Idobj);}
-            }} 
+          PreparedStatement PS=conn1.prepareStatement("DELETE FROM komentari WHERE Idobj=?");
+          PreparedStatement PSL=conn1.prepareStatement("DELETE FROM likes WHERE Idobj=?");
+            ps.setInt(1, obj1.get(i).Idobj);
+          PS.setInt(1,  obj1.get(i).Idobj);
+          PSL.setInt(1, obj1.get(i).Idobj);
+            ps.execute();
+            PS.execute();
+            PSL.execute();}
+            
+        } 
       // randompane.setMinWidth(1000);
        //randompane.setMaxWidth(1000);
+       List <Objava> obj;
+      
+        obj = objavarep.getObjava();
+        randompane.getChildren().clear();
        for(i=0;i<obj.size();i++)
         {
             Circle C=new Circle (40);
-            C.setFill(Color.BLACK);
+            C.setFill(Color.LAVENDER);
             C.setLayoutX(50+100*(obj.size()-i-1));
             C.setLayoutY(50.0);
         
@@ -113,7 +118,7 @@ public class SecondaryController {
             randompane.setMaxWidth(100*(i+1));
             Label L=new Label();
             L.setText(obj.get(i).username);
-            L.setStyle("-fx-font-size:  18px;-fx-font-weight:Britanic Bold; -fx-background-color: black; -fx-text-fill: #b52020");
+            L.setStyle("-fx-font-size:  18px;-fx-font-weight:Britanic Bold; -fx-background-color: lavender; -fx-text-fill: #8c3add; -fx-font-family: cambria; -fx-font-weight: bold");
             L.setLayoutX(11+100*(obj.size()-i-1));
             L.setLayoutY(100);
             L.setPrefWidth(80);
@@ -145,34 +150,39 @@ public class SecondaryController {
     void liststory(ActionEvent event) throws SQLException {
         int i=0;
         Connection conn1= DBConnection.getConnection();  Statement statement = conn1.createStatement();
-        List <Objava> obj;
+        List <Objava> obj1;
+      
+        obj1 = objavarep.getObjava();
+       // randompane.setPrefHeight(100);
+       for(i=0;i<obj1.size();i++)
+       {
+             SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Date date = new Date(System.currentTimeMillis()-60*60*24*1000);
+            Date d1=obj1.get(i).datum;
+            Time d2=obj1.get(i).vreme;
+            if(formatter.format(date).compareTo(d1+" "+d2)>0) 
+            {PreparedStatement ps=conn1.prepareStatement("DELETE FROM objava WHERE Idobj=?");
+          PreparedStatement PS=conn1.prepareStatement("DELETE FROM komentari WHERE Idobj=?");
+          PreparedStatement PSL=conn1.prepareStatement("DELETE FROM likes WHERE Idobj=?");
+            ps.setInt(1, obj1.get(i).Idobj);
+          PS.setInt(1,  obj1.get(i).Idobj);
+          PSL.setInt(1, obj1.get(i).Idobj);
+            ps.execute();
+            PS.execute();
+            PSL.execute();}
+            
+        } 
+      // randompane.setMinWidth(1000);
+       //randompane.setMaxWidth(1000);
+       List <Objava> obj;
       
         obj = objavarep.getObjava();
-       // randompane.setPrefHeight(100);
-       randompane.getChildren().clear();
-       for(i=0;i<obj.size();i++)
-       {
-           SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd");
-            Date date = new Date(System.currentTimeMillis()-60*60*24*1000);
-            Date d1=obj.get(i).datum;
-            if(date.compareTo(d1)>0) 
-            {PreparedStatement ps=conn1.prepareStatement("DELETE FROM objava WHERE Idobj=?");
-            ps.setInt(1, obj.get(i).Idobj);
-            ps.execute();}
-            else if(date.compareTo(d1)==0)
-            {SimpleDateFormat formatter1= new SimpleDateFormat("HH:mm:ss");
-            Date date1 = new Date(System.currentTimeMillis());
-            Time d11=obj.get(i).vreme;
-            if(d11.compareTo(date1)<0)  
-          {PreparedStatement ps=conn1.prepareStatement("DELETE objava WHERE Idobj=?");
-            ps.setInt(1, obj.get(i).Idobj);}
-            }} 
-       randompane.getChildren().clear();
+        randompane.getChildren().clear();
 
       for(i=0;i<obj.size();i++)
         {
             Circle C=new Circle (40);
-            C.setFill(Color.BLACK);
+            C.setFill(Color.LAVENDER);
             C.setLayoutX(50+100*(obj.size()-i-1));
             C.setLayoutY(50.0);
         
@@ -183,7 +193,7 @@ public class SecondaryController {
             randompane.setMaxWidth(100*(i+1));
             Label L=new Label();
             L.setText(obj.get(i).username);
-            L.setStyle("-fx-font-size:  18px;-fx-font-weight:Britanic Bold; -fx-background-color: black; -fx-text-fill: #b52020");
+            L.setStyle("-fx-font-size:  18px;-fx-font-weight:Britanic Bold; -fx-background-color: lavender; -fx-text-fill: #8c3add; -fx-font-family: cambria; -fx-font-weight: bold");
             L.setLayoutX(11+100*(obj.size()-i-1));
             L.setLayoutY(100);
             L.setPrefWidth(80);
@@ -287,11 +297,12 @@ public class SecondaryController {
         List <Objava> obj;
       
         obj = objavarep.getObjava();
+        randompane.getChildren().clear();
         randompane.setPrefHeight(100);
        for(i=0;i<obj.size();i++)
         {
             Circle C=new Circle (40);
-            C.setFill(Color.BLACK);
+            C.setFill(Color.LAVENDER);
             C.setLayoutX(50+100*(obj.size()-i-1));
             C.setLayoutY(50.0);
         
@@ -302,7 +313,7 @@ public class SecondaryController {
             randompane.setMaxWidth(100*(i+1));
             Label L=new Label();
             L.setText(obj.get(i).username);
-            L.setStyle("-fx-font-size:  18px;-fx-font-weight:Britanic Bold; -fx-background-color: black; -fx-text-fill: #b52020");
+            L.setStyle("-fx-font-size:  18px;-fx-font-weight:Britanic Bold; -fx-background-color: lavender; -fx-text-fill: #8c3add; -fx-font-family: cambria; -fx-font-weight: bold");
             L.setLayoutX(11+100*(obj.size()-i-1));
             L.setLayoutY(100);
             L.setPrefWidth(80);

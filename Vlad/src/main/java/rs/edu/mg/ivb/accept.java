@@ -98,15 +98,7 @@ public class accept {
             yes.setLayoutY(30+100*i);
             yes.setPrefWidth(80);
             yes.setPrefHeight(50);
-            yes.setStyle("-fx-font-size: 24px; -fx-font-weight:Britanic Bold; -fx-background-color: black; -fx-text-fill: #b52020");
-            yes.setOnMouseEntered( (javafx.scene.input.MouseEvent me) -> {
-                    yes.setStyle("-fx-font-size:  24px; -fx-font-weight:Britanic Bold; -fx-font-weight:  black;  -fx-text-fill: #b52020");
-
-            });
-            yes.setOnMouseExited( (javafx.scene.input.MouseEvent me) -> {
-                    yes.setStyle("-fx-font-size:  24px; -fx-font-weight:Britanic Bold; -fx-background-color: black; -fx-text-fill: #b52020");
-
-            });
+            yes.setStyle("-fx-font-size: 24px; -fx-font-weight:Britanic Bold; -fx-background-color: lavender; -fx-text-fill: #8c3add");
 
        
             JFXButton no = new JFXButton("No");
@@ -114,22 +106,12 @@ public class accept {
             no.setLayoutY(30+100*i);
             no.setPrefWidth(80);
             no.setPrefHeight(50);
-            no.setStyle("-fx-font-size:  24px;-fx-font-weight:Britanic Bold; -fx-background-color: black; -fx-text-fill: #b52020");
-            no.setOnMouseEntered( (javafx.scene.input.MouseEvent me) -> {
-                    no.setStyle("-fx-font-size:  24px;-fx-font-weight:Britanic Bold; -fx-font-weight:  black;  -fx-text-fill: #b52020");
+            no.setStyle("-fx-font-size: 24px; -fx-font-weight:Britanic Bold; -fx-background-color: lavender; -fx-text-fill: #8c3add");
 
-            });
-            no.setOnMouseExited( (javafx.scene.input.MouseEvent me) -> {
-                    no.setStyle("-fx-font-size:  24px;-fx-font-weight:Britanic Bold; -fx-background-color: black; -fx-text-fill: #b52020");
-
-            });
-            
-         
-        
          
             Label L=new Label();
             L.setText(rs1.getString("odkoga")+" wants to become friends.");
-            L.setStyle("-fx-font-size:  18px;-fx-font-weight:Britanic Bold; -fx-background-color: white; -fx-text-fill: #b52020");
+            L.setStyle("-fx-font-size:  18px;-fx-font-weight:Britanic Bold; -fx-background-color: wheat; -fx-text-fill: darkorange; -fx-font-weight: bold");
             L.setLayoutX(230);
             L.setLayoutY(30+100*i);
             L.setPrefWidth(320);
@@ -214,15 +196,8 @@ public class accept {
             yes.setLayoutY(30+100*i);
             yes.setPrefWidth(80);
             yes.setPrefHeight(50);
-            yes.setStyle("-fx-font-size: 24px; -fx-font-weight:Britanic Bold; -fx-background-color: black; -fx-text-fill: #b52020");
-            yes.setOnMouseEntered( (javafx.scene.input.MouseEvent me) -> {
-                    yes.setStyle("-fx-font-size:  24px; -fx-font-weight:Britanic Bold; -fx-font-weight:  black;  -fx-text-fill: #b52020");
+            yes.setStyle("-fx-font-size: 24px; -fx-font-weight: bold; -fx-background-color: lavender; -fx-text-fill: #8c3add");
 
-            });
-            yes.setOnMouseExited( (javafx.scene.input.MouseEvent me) -> {
-                    yes.setStyle("-fx-font-size:  24px; -fx-font-weight:Britanic Bold; -fx-background-color: black; -fx-text-fill: #b52020");
-
-            });
 
        
             JFXButton no = new JFXButton("No");
@@ -230,22 +205,11 @@ public class accept {
             no.setLayoutY(30+100*i);
             no.setPrefWidth(80);
             no.setPrefHeight(50);
-            no.setStyle("-fx-font-size:  24px;-fx-font-weight:Britanic Bold; -fx-background-color: black; -fx-text-fill: #b52020");
-            no.setOnMouseEntered( (javafx.scene.input.MouseEvent me) -> {
-                    no.setStyle("-fx-font-size:  24px;-fx-font-weight:Britanic Bold; -fx-font-weight:  black;  -fx-text-fill: #b52020");
+            no.setStyle("-fx-font-size: 24px; -fx-font-weight: bold; -fx-background-color: lavender; -fx-text-fill: #8c3add");
 
-            });
-            no.setOnMouseExited( (javafx.scene.input.MouseEvent me) -> {
-                    no.setStyle("-fx-font-size:  24px;-fx-font-weight:Britanic Bold; -fx-background-color: black; -fx-text-fill: #b52020");
-
-            });
-            
-         
-        
-         
             Label L=new Label();
             L.setText(rs1.getString("odkoga")+" wants to become friends.");
-            L.setStyle("-fx-font-size:  18px;-fx-font-weight:Britanic Bold; -fx-background-color: white; -fx-text-fill: #b52020");
+            L.setStyle("-fx-font-size:  18px;-fx-font-weight:Britanic Bold; -fx-background-color: wheat; -fx-text-fill: darkorange; -fx-font-weight: bold");
             L.setLayoutX(230);
             L.setLayoutY(30+100*i);
             L.setPrefWidth(320);

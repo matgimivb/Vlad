@@ -21,22 +21,31 @@ public class App extends Application {
     public static  User u;
     public static User l;
     public static String k;
-   
+    private static Stage ps;
 
     @Override
     public void start(Stage stage) throws IOException {
+        ps = stage;
         scene = new Scene(loadFXML("Login"));
         stage.setScene(scene);
         stage.show();
     }
 
     public static void setRoot(String fxml) throws IOException {
-        scene.setRoot(loadFXML(fxml));
+            scene.setRoot(loadFXML(fxml));
+            if(fxml.equals("secondary"))
+            {
+                ps.setWidth(1200);
+                ps.setHeight(675);
+            }
+            
     }
+    
 
     private static Parent loadFXML(String fxml) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
-        return fxmlLoader.load();
+        Parent p = fxmlLoader.load();
+        return p;
     }
 
     public static void main(String[] args) {

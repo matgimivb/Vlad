@@ -4,8 +4,6 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.effect.DropShadow?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.paint.Color?>
@@ -15,9 +13,9 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="833.0" prefWidth="1124.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="rs.edu.mg.ivb.SecondaryController">
+<Pane maxHeight="600.0" maxWidth="1200.0" minHeight="600.0" minWidth="1200.0" prefHeight="600.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="rs.edu.mg.ivb.SecondaryController">
    <children>
-      <Rectangle arcHeight="15.0" arcWidth="15.0" height="216.0" layoutX="264.0" layoutY="91.0" strokeType="INSIDE" width="641.0">
+      <Rectangle arcHeight="15.0" arcWidth="15.0" height="117.0" layoutX="260.0" layoutY="300.0" strokeType="INSIDE" width="641.0">
          <effect>
             <DropShadow offsetX="5.0" offsetY="5.0" />
          </effect>
@@ -38,43 +36,33 @@
             </LinearGradient>
          </fill>
       </Rectangle>
-      <ImageView fitHeight="71.0" fitWidth="93.0" layoutX="85.0" layoutY="99.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../../../../../../../../../Downloads/wolf.jpg" />
-         </image>
-      </ImageView>
-      <TextArea fx:id="text" layoutX="348.0" layoutY="114.0" prefHeight="63.0" prefWidth="368.0" promptText="What are you thinking about?" style="-fx-background-color: PURPLE;" wrapText="true">
+      <TextArea fx:id="text" layoutX="362.0" layoutY="327.0" prefHeight="63.0" prefWidth="368.0" promptText="What are you thinking about?" style="-fx-background-color: PURPLE;" wrapText="true">
          <font>
             <Font name="Cambria Italic" size="18.0" />
          </font>
       </TextArea>
-      <JFXButton buttonType="RAISED" layoutX="676.0" layoutY="222.0" prefHeight="56.0" prefWidth="190.0" style="-fx-background-color: lavender; -fx-background-radius: 10;" text="Upload image" textFill="#8c3add">
+      <JFXButton buttonType="RAISED" layoutX="665.0" layoutY="496.0" onAction="#uploadAudio" prefHeight="56.0" prefWidth="190.0" style="-fx-background-color: lavender; -fx-background-radius: 10;" text="Upload audio" textFill="#8c3add">
          <font>
             <Font name="Cambria Bold Italic" size="23.0" />
          </font>
       </JFXButton>
-      <JFXButton buttonType="RAISED" layoutX="366.0" layoutY="229.0" onAction="#uploadAudio" prefHeight="56.0" prefWidth="190.0" style="-fx-background-color: lavender; -fx-background-radius: 10;" text="Upload audio" textFill="#8c3add">
+      <JFXButton fx:id="postBtn" buttonType="RAISED" layoutX="760.0" layoutY="335.0" onAction="#newPost" prefHeight="48.0" prefWidth="118.0" style="-fx-background-color: lavender; -fx-background-radius: 10;" text="Post!" textFill="#8c3add">
          <font>
             <Font name="Cambria Bold Italic" size="23.0" />
          </font>
       </JFXButton>
-      <JFXButton fx:id="postBtn" buttonType="RAISED" layoutX="757.0" layoutY="122.0" onAction="#newPost" prefHeight="48.0" prefWidth="118.0" style="-fx-background-color: lavender; -fx-background-radius: 10;" text="Post!" textFill="#8c3add">
-         <font>
-            <Font name="Cambria Bold Italic" size="23.0" />
-         </font>
-      </JFXButton>
-      <Line endX="688.0" endY="201.5" layoutX="201.0" layoutY="-3.0" startX="100.0" startY="201.5" />
-      <ScrollPane fx:id="scroll" layoutX="236.0" layoutY="347.0" prefHeight="154.0" prefWidth="700.0">
+      <Line endX="701.0" endY="288.0" layoutX="194.0" layoutY="175.0" startX="75.0" startY="288.0" />
+      <ScrollPane fx:id="scroll" layoutX="236.0" layoutY="40.0" prefHeight="154.0" prefWidth="700.0">
          <content>
           <AnchorPane fx:id="randompane" minHeight="0.0" minWidth="0.0" prefHeight="138.0" prefWidth="100.0" />
          </content>
       </ScrollPane>
-      <JFXButton fx:id="sendbtn" buttonType="RAISED" layoutX="641.0" layoutY="24.0" onAction="#send" prefHeight="29.0" prefWidth="142.0" style="-fx-background-color: lavender; -fx-background-radius: 10;" text="Send friend request" textFill="#8c3add">
+      <JFXButton fx:id="sendbtn" buttonType="RAISED" layoutX="291.0" layoutY="496.0" onAction="#send" prefHeight="56.0" prefWidth="190.0" style="-fx-background-color: lavender; -fx-background-radius: 10;" text="Friend requests" textFill="#8c3add">
          <font>
-            <Font name="Cambria Bold Italic" size="12.0" />
+            <Font name="Cambria Bold Italic" size="22.0" />
          </font>
       </JFXButton>
-      <JFXButton fx:id="story" buttonType="RAISED" layoutX="26.0" layoutY="186.0" onAction="#liststory" prefHeight="56.0" prefWidth="190.0" style="-fx-background-color: lavender; -fx-background-radius: 10;" text="story" textFill="#8c3add">
+      <JFXButton fx:id="story" buttonType="RAISED" layoutX="237.0" layoutY="194.0" onAction="#liststory" prefHeight="48.0" prefWidth="700.0" style="-fx-background-color: lavender; -fx-background-radius: 10;" text="Refresh stories" textFill="#8c3add">
          <font>
             <Font name="Cambria Bold Italic" size="23.0" />
          </font>
