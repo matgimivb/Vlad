@@ -20,10 +20,39 @@ public class ChatManager extends TimerTask{
     User user;
     
     public ChatManager(User u){
-        this.user=user; 
+        this.user=user;
+        
+        List<Chat> l1=new LinkedList<>();
+        
     }
     
-    //(allch,newmess,menjanje onog glupog dela za or)->odradjeno  iiii jos dodavanje da se uzme prethodnih 20 poruka, grupe 
+    //(allch,newmess,menjanje onog glupog dela za or)->odradjeno  iiii jos dodavanje da se uzme prethodnih 20 poruka, grupe
+    //count je broj stranice ya poruke, brojanje krece od 0. Vraca 20x2 matricu gde je prva vrednost teks a druga vreme poslatog teksta
+    public String[][] last20mess(Chat c,int count){
+        String l1[][] = new String[20][2];
+        
+        String upit = "SELECT M.messtime AS MTIME,M.messtext AS MTEXT" +
+                      "FROM message M"+
+                      "WHERE M.IdChat = ?"+
+                      "ORDER BY M.messtime";
+        try(Connection conn=DBConnection.getConnection();PreparedStatement ps=conn.prepareStatement(upit);){
+            ps.setInt(1,c.IdChat);
+            ps.execute();
+            ResultSet rs=ps.getResultSet();
+            for (int i=0;rs.next();i++)
+            {
+                if (i>=count*20 && i<(count+1)*20){
+                    String mTime = rs.getString("MTIME");
+                    String mText = rs.getString("MTEXT");
+                    l1[i-count*20][0] = mText;
+                    l1[i-count*20][1] = mTime;}
+            }
+        }catch(SQLException e){
+        e.printStackTrace();
+    }    
+        return l1;
+   
+    }
     
     public void sendMessage(Chat chat,String text){
     long millis=System.currentTimeMillis();
