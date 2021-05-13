@@ -21,7 +21,7 @@ import javafx.stage.Modality;
 import rs.edu.mg.ivb.db.DBConnection;
 import rs.edu.mg.ivb.db.dao.User;
 
-public class storycontroller extends SecondaryController {
+public class AudioController {
 
     @FXML
     private ScrollPane adagaja;
@@ -36,9 +36,6 @@ public class storycontroller extends SecondaryController {
     private JFXButton likedugme;
 
     @FXML
-    private JFXTextArea statusxd;
-
-    @FXML
     private Label numlike;
 
     @FXML
@@ -48,44 +45,53 @@ public class storycontroller extends SecondaryController {
     private JFXButton load;
 
     @FXML
-    private JFXTextField time;
+    private JFXTextField upm;
 
     @FXML
     private JFXButton postcomm;
-    @FXML
-    private JFXTextField upm;
+
     @FXML
     private Pane neadagajic;
 
-    static User us = App.u;
-    static String s;
+    @FXML
+    private JFXTextArea statusxd;
+
+    @FXML
+    private JFXTextField time;
+
+    User us = App.u;
 
     @FXML
     public void initialize() throws SQLException {
         int ex = 0;
-        int kon = Integer.parseInt(App.k);
+        int kon = Integer.parseInt(App.k1);
         // System.out.println(kon);
         try ( Connection conn = DBConnection.getConnection();  Statement s = conn.createStatement();) {
-            PreparedStatement ps1 = conn.prepareStatement("SELECT status, datum, vreme From objava  WHERE Idobj=?");
-            ps1.setInt(1, kon);//nzm kako da prosledim objavu
+            PreparedStatement ps1 = conn.prepareStatement("SELECT Sadrzaj From hashtable WHERE IdAudio=?");
+            ps1.setInt(1, kon);
             ResultSet rs1 = ps1.executeQuery();
-            rs1.next();
-            statusxd.setText(rs1.getString("status"));
-            time.setText("Posted on " + rs1.getString("datum") + ", " + rs1.getString("vreme"));
-            PreparedStatement ps2 = conn.prepareStatement("SELECT COUNT(*) From LIKES  WHERE Idobj=? AND tre='L'");
-            ps2.setInt(1, kon);//nzm kako da prosledim objavu
+            while (rs1.next()) {
+                statusxd.setText(statusxd.getText() + "#" + rs1.getString("Sadrzaj") + "\n");
+            }
+            PreparedStatement ps11 = conn.prepareStatement("SELECT vreme, datum From audio WHERE IdAudio=?");
+            ps11.setInt(1, kon);
+            ResultSet rs11 = ps11.executeQuery();
+            rs11.next();
+            time.setText("Posted on " + rs11.getString("datum") + ", " + rs11.getString("vreme"));
+            PreparedStatement ps2 = conn.prepareStatement("SELECT COUNT(*) FROM likes1  WHERE IdAudio=? AND tre='L'");
+            ps2.setInt(1, kon);
             ResultSet rs2 = ps2.executeQuery();
             rs2.next();
             int i = rs2.getInt(1);
 
             numlike.setText("" + i);
-            PreparedStatement ps3 = conn.prepareStatement("SELECT COUNT(*) From LIKES  WHERE Idobj=? AND tre='D'");
-            ps3.setInt(1, kon);//nzm kako da prosledim objavu
+            PreparedStatement ps3 = conn.prepareStatement("SELECT COUNT(*) FROM likes1 WHERE IdAudio=? AND tre='D'");
+            ps3.setInt(1, kon);
             ResultSet rs3 = ps3.executeQuery();
             rs3.next();
             i = rs3.getInt(1);
             numdislike.setText("" + i);
-            PreparedStatement PS = conn.prepareStatement("SELECT * From komentari  WHERE Idobj=?");
+            PreparedStatement PS = conn.prepareStatement("SELECT * FROM komentari1  WHERE IdAudio=?");
             PS.setInt(1, kon);
             ResultSet RS = PS.executeQuery();
             neadagajic.getChildren().clear();
@@ -123,7 +129,7 @@ public class storycontroller extends SecondaryController {
 
                         try {
                             Connection conn1 = DBConnection.getConnection();
-                            PreparedStatement ps5 = conn1.prepareStatement("DELETE FROM komentari WHERE idcom=?");
+                            PreparedStatement ps5 = conn1.prepareStatement("DELETE FROM komentari1 WHERE idcom=?");
                             ps5.setInt(1, rea);
                             ps5.execute();
                             neadagajic.getChildren().removeAll(ta, b, l);
@@ -137,18 +143,15 @@ public class storycontroller extends SecondaryController {
             }
 
         }
-        // System.out.println(s);
-        //System.out.println(App.k);
-        //  if(App.k==null) initialize();
-
     }
 
     //adagaja
+    //adagaja
     @FXML
     void dislike(ActionEvent event) throws SQLException {
-        int kon = Integer.parseInt(App.k);
+        int kon = Integer.parseInt(App.k1);
         try ( Connection conn = DBConnection.getConnection();  Statement s = conn.createStatement();) {
-            PreparedStatement PSX = conn.prepareStatement("SELECT Username From objava WHERE Idobj=?");
+            PreparedStatement PSX = conn.prepareStatement("SELECT Username From audio WHERE IdAudio=?");
             PSX.setInt(1, kon);
             ResultSet RSX = PSX.executeQuery();
             RSX.next();
@@ -165,42 +168,42 @@ public class storycontroller extends SecondaryController {
             //System.out.println(marence);
             //System.out.println(us.Username);
             if (rofl || xd || us.Username.equals(marence)) {
-                PreparedStatement ps1 = conn.prepareStatement("SELECT * FROM likes L WHERE L.Username=? AND L.Idobj=?");
+                PreparedStatement ps1 = conn.prepareStatement("SELECT * FROM likes1 L WHERE L.Username=? AND L.IdAudio=?");
                 ps1.setString(1, us.Username);
                 ps1.setInt(2, kon);
                 ResultSet rs1 = ps1.executeQuery();
                 if (rs1.next()) {
                     if (rs1.getString("tre").equals("D")) {
 
-                        PreparedStatement ps2 = conn.prepareStatement("DELETE FROM likes WHERE Username=? AND Idobj=?");
+                        PreparedStatement ps2 = conn.prepareStatement("DELETE FROM likes1 WHERE Username=? AND IdAudio=?");
                         ps2.setString(1, us.Username);
                         ps2.setInt(2, kon);
                         ps2.execute();
 
                     } else {
 
-                        PreparedStatement ps3 = conn.prepareStatement("UPDATE likes SET tre='D' WHERE Username=? AND Idobj=?");
+                        PreparedStatement ps3 = conn.prepareStatement("UPDATE likes1 SET tre='D' WHERE Username=? AND IdAudio=?");
                         ps3.setString(1, us.Username);
                         ps3.setInt(2, kon);
                         ps3.execute();
                     }
                 } else {
-                    PreparedStatement ps4 = conn.prepareStatement("INSERT INTO likes(Idobj,Username,tre) VALUES (?,?,?)");
+                    PreparedStatement ps4 = conn.prepareStatement("INSERT INTO likes1(IdAudio,Username,tre) VALUES (?,?,?)");
                     ps4.setInt(1, kon);
                     ps4.setString(2, us.Username);
                     ps4.setString(3, "D");
                     ps4.execute();
                 }
 
-                PreparedStatement ps2 = conn.prepareStatement("SELECT COUNT(*) From LIKES  WHERE Idobj=? AND tre='L'");
-                ps2.setInt(1, kon);//nzm kako da prosledim objavu
+                PreparedStatement ps2 = conn.prepareStatement("SELECT COUNT(*) From likes1  WHERE IdAudio=? AND tre='L'");
+                ps2.setInt(1, kon);
                 ResultSet rs2 = ps2.executeQuery();
                 rs2.next();
                 int i = rs2.getInt(1);
 
                 numlike.setText("" + i);
-                PreparedStatement ps3 = conn.prepareStatement("SELECT COUNT(*) From LIKES  WHERE Idobj=? AND tre='D'");
-                ps3.setInt(1, kon);//nzm kako da prosledim objavu
+                PreparedStatement ps3 = conn.prepareStatement("SELECT COUNT(*) From likes1  WHERE IdAudio=? AND tre='D'");
+                ps3.setInt(1, kon);
                 ResultSet rs3 = ps3.executeQuery();
                 rs3.next();
                 i = rs3.getInt(1);
@@ -219,9 +222,9 @@ public class storycontroller extends SecondaryController {
 
     @FXML
     void like(ActionEvent event) throws SQLException {
-        int kon = Integer.parseInt(App.k);
+        int kon = Integer.parseInt(App.k1);
         try ( Connection conn = DBConnection.getConnection();  Statement s = conn.createStatement();) {
-            PreparedStatement PSX = conn.prepareStatement("SELECT Username From objava WHERE Idobj=?");
+            PreparedStatement PSX = conn.prepareStatement("SELECT Username From audio WHERE IdAudio=?");
             PSX.setInt(1, kon);
             ResultSet RSX = PSX.executeQuery();
             RSX.next();
@@ -239,7 +242,7 @@ public class storycontroller extends SecondaryController {
             //System.out.println(us.Username);
             if (rofl || xd || us.Username.equals(marence)) {
 
-                PreparedStatement ps1 = conn.prepareStatement("SELECT * FROM likes L WHERE L.Username=? AND L.Idobj=?");
+                PreparedStatement ps1 = conn.prepareStatement("SELECT * FROM likes1 L WHERE L.Username=? AND L.IdAudio=?");
                 ps1.setString(1, us.Username);
                 ps1.setInt(2, kon);
                 ResultSet rs1 = ps1.executeQuery();
@@ -248,34 +251,34 @@ public class storycontroller extends SecondaryController {
 
                     if (rs1.getString("tre").equals("L")) {
 
-                        PreparedStatement ps2 = conn.prepareStatement("DELETE FROM likes WHERE Username=? AND Idobj=?");
+                        PreparedStatement ps2 = conn.prepareStatement("DELETE FROM likes1 WHERE Username=? AND IdAudio=?");
                         ps2.setString(1, us.Username);
                         ps2.setInt(2, kon);
                         ps2.execute();
 
                     } else {
 
-                        PreparedStatement ps3 = conn.prepareStatement("UPDATE likes SET tre='L' WHERE Username=? AND Idobj=?");
+                        PreparedStatement ps3 = conn.prepareStatement("UPDATE likes1 SET tre='L' WHERE Username=? AND IdAudio=?");
                         ps3.setString(1, us.Username);
                         ps3.setInt(2, kon);
                         ps3.execute();
                     }
                 } else {
-                    PreparedStatement ps4 = conn.prepareStatement("INSERT INTO likes(Idobj,Username,tre) VALUES (?,?,?)");
+                    PreparedStatement ps4 = conn.prepareStatement("INSERT INTO likes1(IdAudio,Username,tre) VALUES (?,?,?)");
                     ps4.setInt(1, kon);
                     ps4.setString(2, us.Username);
                     ps4.setString(3, "L");
                     ps4.execute();
                 }
 
-                PreparedStatement ps2 = conn.prepareStatement("SELECT COUNT(*) From LIKES  WHERE Idobj=? AND tre='L'");
+                PreparedStatement ps2 = conn.prepareStatement("SELECT COUNT(*) From likes1 WHERE IdAudio=? AND tre='L'");
                 ps2.setInt(1, kon);
                 ResultSet rs2 = ps2.executeQuery();
                 rs2.next();
                 int i = rs2.getInt(1);
 
                 numlike.setText("" + i);
-                PreparedStatement ps3 = conn.prepareStatement("SELECT COUNT(*) From LIKES  WHERE Idobj=? AND tre='D'");
+                PreparedStatement ps3 = conn.prepareStatement("SELECT COUNT(*) From likes1 WHERE IdAudio=? AND tre='D'");
                 ps3.setInt(1, kon);
                 ResultSet rs3 = ps3.executeQuery();
                 rs3.next();
@@ -293,31 +296,37 @@ public class storycontroller extends SecondaryController {
     }
 
     @FXML
-    void loadsto(ActionEvent event) throws SQLException {
-        //System.out.println(App.k);
+    void loadaudio(ActionEvent event) throws SQLException {
         int ex = 0;
-        int kon = Integer.parseInt(App.k);
-        System.out.println(kon);
+        statusxd.setText("");
+        int kon = Integer.parseInt(App.k1);
+        // System.out.println(kon);
         try ( Connection conn = DBConnection.getConnection();  Statement s = conn.createStatement();) {
-            PreparedStatement ps1 = conn.prepareStatement("SELECT status From objava  WHERE Idobj=?");
+            PreparedStatement ps1 = conn.prepareStatement("SELECT Sadrzaj From hashtable WHERE IdAudio=?");
             ps1.setInt(1, kon);
             ResultSet rs1 = ps1.executeQuery();
-            rs1.next();
-            statusxd.setText(rs1.getString("status"));
-            PreparedStatement ps2 = conn.prepareStatement("SELECT COUNT(*) From LIKES  WHERE Idobj=? AND tre='L'");
+            while (rs1.next()) {
+                statusxd.setText(statusxd.getText() + "#" + rs1.getString("Sadrzaj") + "\n");
+            }
+            PreparedStatement ps11 = conn.prepareStatement("SELECT vreme, datum From audio WHERE IdAudio=?");
+            ps11.setInt(1, kon);
+            ResultSet rs11 = ps11.executeQuery();
+            rs11.next();
+            time.setText("Posted on " + rs11.getString("datum") + ", " + rs11.getString("vreme"));
+            PreparedStatement ps2 = conn.prepareStatement("SELECT COUNT(*) FROM likes1  WHERE IdAudio=? AND tre='L'");
             ps2.setInt(1, kon);
             ResultSet rs2 = ps2.executeQuery();
             rs2.next();
             int i = rs2.getInt(1);
 
             numlike.setText("" + i);
-            PreparedStatement ps3 = conn.prepareStatement("SELECT COUNT(*) From LIKES  WHERE Idobj=? AND tre='D'");
+            PreparedStatement ps3 = conn.prepareStatement("SELECT COUNT(*) FROM likes1 WHERE IdAudio=? AND tre='D'");
             ps3.setInt(1, kon);
             ResultSet rs3 = ps3.executeQuery();
             rs3.next();
             i = rs3.getInt(1);
             numdislike.setText("" + i);
-            PreparedStatement PS = conn.prepareStatement("SELECT * From komentari  WHERE Idobj=?");
+            PreparedStatement PS = conn.prepareStatement("SELECT * FROM komentari1  WHERE IdAudio=?");
             PS.setInt(1, kon);
             ResultSet RS = PS.executeQuery();
             neadagajic.getChildren().clear();
@@ -355,7 +364,7 @@ public class storycontroller extends SecondaryController {
 
                         try {
                             Connection conn1 = DBConnection.getConnection();
-                            PreparedStatement ps5 = conn1.prepareStatement("DELETE FROM komentari WHERE idcom=?");
+                            PreparedStatement ps5 = conn1.prepareStatement("DELETE FROM komentari1 WHERE idcom=?");
                             ps5.setInt(1, rea);
                             ps5.execute();
                             neadagajic.getChildren().removeAll(ta, b, l);
@@ -369,20 +378,19 @@ public class storycontroller extends SecondaryController {
             }
 
         }
-
     }
 
     @FXML
     void postlol(ActionEvent event) throws SQLException {
-        int kon = Integer.parseInt(App.k);
+        int kon = Integer.parseInt(App.k1);
         String str = upm.getText();
         try ( Connection conn = DBConnection.getConnection();  Statement s = conn.createStatement();) {
-            PreparedStatement PSX = conn.prepareStatement("SELECT Username From objava WHERE Idobj=?");
+            PreparedStatement PSX = conn.prepareStatement("SELECT Username FROM audio WHERE IdAudio=?");
             PSX.setInt(1, kon);
             ResultSet RSX = PSX.executeQuery();
             RSX.next();
             String marence = RSX.getString("Username");
-            PreparedStatement PSX1 = conn.prepareStatement("SELECT * From prijateljstvo WHERE odkoga=? AND zakoga=? AND tre='Y'");
+            PreparedStatement PSX1 = conn.prepareStatement("SELECT * FROM prijateljstvo WHERE odkoga=? AND zakoga=? AND tre='Y'");
             PSX1.setString(1, marence);
             PSX1.setString(2, us.Username);
             ResultSet RSX1 = PSX1.executeQuery();
@@ -394,8 +402,8 @@ public class storycontroller extends SecondaryController {
             // System.out.println(marence);
             //System.out.println(us.Username);
             if (rofl || xd || us.Username.equals(marence)) {
-                PreparedStatement ps1 = conn.prepareStatement("INSERT INTO komentari(Idobj,Username,comm,idcom) Values(?,?,?,? )");
-                ResultSet rs = s.executeQuery("Select Max(idcom)+1 From komentari");
+                PreparedStatement ps1 = conn.prepareStatement("INSERT INTO komentari1(IdAudio,Username,comm,idcom) VALUES(?,?,?,?)");
+                ResultSet rs = s.executeQuery("SELECT MAX(idcom)+1 FROM komentari1");
                 rs.next();
                 int x = rs.getInt(1);
                 ps1.setInt(4, rs.getInt(1));
@@ -422,24 +430,9 @@ public class storycontroller extends SecondaryController {
                 neadagajic.getChildren().clear();
                 neadagajic.setPrefHeight(153);
                 adagajic.setPrefHeight(583);
-                /*       neadagajic.getChildren().addAll(ta,c,r);
-
-         r.setOnMousePressed((javafx.scene.input.MouseEvent me) ->{
-         
-            try {
-                Connection conn1 = DBConnection.getConnection(); 
-
-                PreparedStatement ps4=conn.prepareStatement("DELETE FROM komentari WHERE idcom=?");
-                ps4.setInt(1, x);
-                ps4.execute();
-                 neadagajic.getChildren().removeAll(ta,c,r);
-            } catch (SQLException ex1) {
-                Logger.getLogger(storycontroller.class.getName()).log(Level.SEVERE, null, ex1);
-            }
-});*/
 
                 int ex = 0;
-                PreparedStatement PS = conn.prepareStatement("SELECT * From komentari  WHERE Idobj=?");
+                PreparedStatement PS = conn.prepareStatement("SELECT * FROM komentari1  WHERE IdAudio=?");
                 PS.setInt(1, kon);
                 ResultSet RS = PS.executeQuery();
 
@@ -474,8 +467,7 @@ public class storycontroller extends SecondaryController {
 
                             try {
                                 Connection conn1 = DBConnection.getConnection();
-                                String edited = t.getText();
-                                PreparedStatement ps5 = conn1.prepareStatement("DELETE FROM komentari WHERE idcom=?");
+                                PreparedStatement ps5 = conn1.prepareStatement("DELETE FROM komentari1 WHERE idcom=?");
                                 ps5.setInt(1, y);
                                 ps5.execute();
                                 neadagajic.getChildren().removeAll(t, b, l);
@@ -498,5 +490,10 @@ public class storycontroller extends SecondaryController {
             }
 
         }
+
     }
+
+    
+    
+    
 }

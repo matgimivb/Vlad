@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<ScrollPane fx:id="adagaja" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="591.0" prefWidth="832.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="rs.edu.mg.ivb.storycontroller">
+<ScrollPane fx:id="adagaja" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="591.0" prefWidth="832.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="rs.edu.mg.ivb.AudioController">
     <content>
         <AnchorPane fx:id="adagajic" minHeight="0.0" minWidth="0.0" prefHeight="584.0" prefWidth="826.0">
             <children>
@@ -35,7 +35,7 @@
                         <Font name="System Bold" size="20.0" />
                     </font>
                 </Label>
-                <JFXButton fx:id="load" layoutX="555.0" layoutY="149.0" onAction="#loadsto" prefHeight="55.0" prefWidth="212.0" style="-fx-background-color: lavender;" text="Refresh story" textFill="#8c3add" textOverrun="CENTER_WORD_ELLIPSIS">
+                <JFXButton fx:id="load" layoutX="555.0" layoutY="149.0" onAction="#loadaudio" prefHeight="55.0" prefWidth="212.0" style="-fx-background-color: lavender;" text="Refresh audio" textFill="#8c3add" textOverrun="CENTER_WORD_ELLIPSIS">
                     <font>
                         <Font name="Cambria Bold Italic" size="23.0" />
                     </font>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextArea?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="rs.edu.mg.ivb.hash">
+   <children>
+      <JFXButton fx:id="tagButton" layoutX="198.0" layoutY="235.0" onAction="#addTag" prefHeight="35.0" prefWidth="204.0" style="-fx-background-color: lavender;" text="Add hash-tag" textFill="#8c3add" textOverrun="CENTER_WORD_ELLIPSIS">
+         <font>
+            <Font name="Cambria Bold Italic" size="25.0" />
+         </font>
+      </JFXButton>
+      <JFXTextArea fx:id="hash" layoutX="73.0" layoutY="53.0" prefHeight="147.0" prefWidth="454.0" promptText="Type a hash tag..." style="-fx-background-color: lavender;" unFocusColor="#4d4d4d00" wrapText="true">
+         <font>
+            <Font name="Cambria Bold Italic" size="22.0" />
+         </font>
+      </JFXTextArea>
+      <JFXButton fx:id="finishButton" layoutX="198.0" layoutY="307.0" onAction="#finish" prefHeight="35.0" prefWidth="204.0" style="-fx-background-color: lavender;" text="Finish" textFill="#8c3add" textOverrun="CENTER_WORD_ELLIPSIS">
+         <font>
+            <Font name="Cambria Bold Italic" size="25.0" />
+         </font>
+      </JFXButton>
+      <JFXTextField layoutX="21.0" layoutY="69.0" prefHeight="68.0" prefWidth="43.0" style="-fx-font-style: lavender;" text="#" unFocusColor="#4d4d4d00">
+         <font>
+            <Font size="48.0" />
+         </font>
+      </JFXTextField>
+   </children>
+</Pane>
