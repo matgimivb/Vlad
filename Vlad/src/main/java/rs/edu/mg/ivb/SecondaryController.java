@@ -304,15 +304,15 @@ public class SecondaryController {
     }
     
        @FXML
-    void next7(ActionEvent event) throws SQLException {
+    void next7a(ActionEvent event) throws SQLException {
         int i=this.page;
-       // this.mrcmagej=this.mrcmagej+7; 
         if( audiorep.getNum()<this.page+7 )
         {
             Alert.AlertType type = Alert.AlertType.INFORMATION;
                     Alert alert = new Alert(type, "");
                     alert.initModality(Modality.APPLICATION_MODAL);
-                    alert.getDialogPane().setContentText("FU");
+                    alert.getDialogPane().setContentText("5 za projekat");
+                            
                     alert.getDialogPane().setHeaderText("ERROR");
                     alert.showAndWait();
         }
@@ -322,5 +322,37 @@ public class SecondaryController {
             initialize();}
         
     }
+     @FXML
+    void previous7a(ActionEvent event) throws SQLException {
+
+       // this.mrcmagej=this.mrcmagej+7; 
+        if( 0==this.page)
+        {
+            Alert.AlertType type = Alert.AlertType.INFORMATION;
+                    Alert alert = new Alert(type, "");
+                    alert.initModality(Modality.APPLICATION_MODAL);
+                    alert.getDialogPane().setContentText("5 za projekat");
+                    alert.getDialogPane().setHeaderText("ERROR");
+                    alert.showAndWait();
+        }
+        else
+        {
+            
+            this.page=this.page-7;
+            initialize();}
+    }
+    
+        @FXML
+    void followedht(ActionEvent event) throws IOException {
+         FXMLLoader FxmlLoader = new FXMLLoader(getClass().getResource("hashovi.fxml"));
+        Parent root1 = (Parent) FxmlLoader.load();
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root1));
+
+        stage.show();
+
+    }
+    
+    
 
 }
