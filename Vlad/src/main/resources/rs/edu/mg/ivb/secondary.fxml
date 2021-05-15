@@ -13,7 +13,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="801.0" maxWidth="1200.0" minHeight="600.0" minWidth="1200.0" prefHeight="801.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="rs.edu.mg.ivb.SecondaryController">
+<Pane maxHeight="801.0" maxWidth="1200.0" minHeight="600.0" minWidth="1200.0" prefHeight="801.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="rs.edu.mg.ivb.SecondaryController">
     <children>
         <Rectangle arcHeight="15.0" arcWidth="15.0" height="117.0" layoutX="261.0" layoutY="433.0" strokeType="INSIDE" width="641.0">
             <effect>
@@ -69,8 +69,13 @@
         </JFXButton>
         <ScrollPane fx:id="scroll1" layoutX="237.0" layoutY="247.0" prefHeight="154.0" prefWidth="700.0">
             <content>
-                <AnchorPane fx:id="randompane1" minHeight="0.0" minWidth="0.0" prefHeight="138.0" prefWidth="100.0" />
+                <AnchorPane fx:id="randompane1" minHeight="0.0" minWidth="0.0" prefHeight="137.0" prefWidth="98.0" />
             </content>
         </ScrollPane>
+      <JFXButton buttonType="RAISED" layoutX="790.0" layoutY="401.0" onAction="#next7" prefHeight="34.0" prefWidth="88.0" style="-fx-background-color: lavender; -fx-background-radius: 10;" text="Next 7" textFill="#8c3add">
+         <font>
+            <Font name="Cambria Bold Italic" size="11.0" />
+         </font>
+      </JFXButton>
     </children>
 </Pane>

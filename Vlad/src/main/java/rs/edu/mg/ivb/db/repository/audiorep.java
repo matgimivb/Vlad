@@ -15,7 +15,7 @@ public class audiorep {
     public static List<Audio> getAudio() throws SQLException {
         List<Audio> result = new LinkedList<>();
 
-        try ( Connection conn = DBConnection.getConnection();  Statement statement = conn.createStatement();  ResultSet rs = statement.executeQuery("SELECT IdAudio,Username,datum,vreme FROM audio ");) {
+        try ( Connection conn = DBConnection.getConnection();  Statement statement = conn.createStatement();  ResultSet rs = statement.executeQuery("SELECT IdAudio,Username,datum,vreme FROM audio ORDER BY datum DESC,vreme DESC  ");) {
             while (rs.next()) {
                 Audio o = new Audio();
                 o.IdAudio = rs.getInt("IdAudio");
@@ -30,5 +30,17 @@ public class audiorep {
         }
 
         return result;
+    }
+    
+      public static int getNum() throws SQLException {
+        List<Audio> result = new LinkedList<>();
+
+        try ( Connection conn = DBConnection.getConnection();  Statement statement = conn.createStatement();  ResultSet rs = statement.executeQuery("SELECT COUNT(*) FROM audio ORDER BY datum DESC,vreme DESC  ");) {
+           rs.next();
+            int i=rs.getInt(1);
+                
+            return i;
+        }
+        
     }
 }

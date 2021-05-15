@@ -26,7 +26,7 @@ public class objavarep {
     public static List<Objava> getObjava() throws SQLException {
         List<Objava> result = new LinkedList<>();
 
-        try ( Connection conn = DBConnection.getConnection();  Statement statement = conn.createStatement();  ResultSet rs = statement.executeQuery("SELECT * FROM objava ");) {
+        try ( Connection conn = DBConnection.getConnection();  Statement statement = conn.createStatement();  ResultSet rs = statement.executeQuery("SELECT * FROM objava ORDER BY datum DESC,vreme DESC ");) {
             while (rs.next()) {
                 Objava o = new Objava();
                 o.Idobj = rs.getInt("Idobj");
@@ -41,6 +41,10 @@ public class objavarep {
 
         return result;
     }
+    
+    
+    
+    
 
     public void deleteobjava() throws SQLException {
         try ( Connection conn = DBConnection.getConnection();  Statement statement = conn.createStatement();  ResultSet rs = statement.executeQuery("SELECT * FROM objava");) {
